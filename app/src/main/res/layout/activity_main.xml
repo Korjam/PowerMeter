@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.kinwatt.powermeter.ui.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/start" />
+
+        <Button
+            android:id="@+id/button_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/stop" />
+    </LinearLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/duration_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/duration"
+            android:textAppearance="@android:style/TextAppearance.Material.Caption"
+            app:layout_constraintEnd_toEndOf="@+id/duration"
+            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintStart_toStartOf="@+id/duration"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.kinwatt.powermeter.ui.widget.ChronometerView
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="00:00:00"
+            android:textAppearance="@android:style/TextAppearance.Material.Display2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/duration_title" />
+
+        <TextView
+            android:id="@+id/speed_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/speed"
+            android:textAppearance="@android:style/TextAppearance.Material.Caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/duration_title"
+            app:layout_constraintTop_toBottomOf="@+id/duration" />
+
+        <com.kinwatt.powermeter.ui.widget.NumberView
+            android:id="@+id/speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="--"
+            android:textAppearance="@android:style/TextAppearance.Material.Display1"
+            app:layout_constraintEnd_toEndOf="@+id/speed_title"
+            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintStart_toStartOf="@+id/speed_title"
+            app:layout_constraintTop_toBottomOf="@+id/speed_title" />
+
+        <TextView
+            android:id="@+id/altitude_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/altitude"
+            android:textAppearance="@android:style/TextAppearance.Material.Caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/duration_title"
+            app:layout_constraintTop_toBottomOf="@+id/speed" />
+
+        <com.kinwatt.powermeter.ui.widget.NumberView
+            android:id="@+id/altitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="--"
+            android:textAppearance="@android:style/TextAppearance.Material.Display1"
+            app:layout_constraintEnd_toEndOf="@+id/altitude_title"
+            app:layout_constraintStart_toStartOf="@+id/altitude_title"
+            app:layout_constraintTop_toBottomOf="@+id/altitude_title" />
+
+        <TextView
+            android:id="@+id/distance_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/distance"
+            android:textAppearance="@android:style/TextAppearance.Material.Caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/duration_title"
+            app:layout_constraintTop_toBottomOf="@+id/altitude" />
+
+        <com.kinwatt.powermeter.ui.widget.NumberView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="--"
+            android:textAppearance="@android:style/TextAppearance.Material.Display1"
+            app:layout_constraintEnd_toEndOf="@+id/distance_title"
+            app:layout_constraintStart_toStartOf="@+id/distance_title"
+            app:layout_constraintTop_toBottomOf="@+id/distance_title" />
+
+        <TextView
+            android:id="@+id/power_3s_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/power_average_3s"
+            android:textAppearance="@android:style/TextAppearance.Material.Caption"
+            app:layout_constraintEnd_toStartOf="@+id/duration_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/duration" />
+
+        <com.kinwatt.powermeter.ui.widget.NumberView
+            android:id="@+id/power_3s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="--"
+            android:textAppearance="@android:style/TextAppearance.Material.Display1"
+            app:layout_constraintEnd_toEndOf="@+id/power_3s_title"
+            app:layout_constraintStart_toStartOf="@+id/power_3s_title"
+            app:layout_constraintTop_toBottomOf="@+id/power_3s_title" />
+
+        <TextView
+            android:id="@+id/power_5s_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/power_average_5s"
+            android:textAppearance="@android:style/TextAppearance.Material.Caption"
+            app:layout_constraintEnd_toStartOf="@+id/duration_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/power_3s" />
+
+        <com.kinwatt.powermeter.ui.widget.NumberView
+            android:id="@+id/power_5s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="--"
+            android:textAppearance="@android:style/TextAppearance.Material.Display1"
+            app:layout_constraintEnd_toEndOf="@+id/power_5s_title"
+            app:layout_constraintStart_toStartOf="@+id/power_5s_title"
+            app:layout_constraintTop_toBottomOf="@+id/power_5s_title" />
+
+        <TextView
+            android:id="@+id/power_10s_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/power_average_10s"
+            android:textAppearance="@android:style/TextAppearance.Material.Caption"
+            app:layout_constraintEnd_toStartOf="@+id/duration_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/power_5s" />
+
+        <com.kinwatt.powermeter.ui.widget.NumberView
+            android:id="@+id/power_10s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="--"
+            android:textAppearance="@android:style/TextAppearance.Material.Display1"
+            app:layout_constraintEnd_toEndOf="@+id/power_10s_title"
+            app:layout_constraintStart_toStartOf="@+id/power_10s_title"
+            app:layout_constraintTop_toBottomOf="@+id/power_10s_title" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

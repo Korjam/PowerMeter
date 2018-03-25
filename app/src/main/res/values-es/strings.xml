@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="altitude">Altitud (m)</string>
+    <string name="age">Edad</string>
+
+    <string name="bike_data">Datos de bicicleta</string>
+    <string name="bike_type">Tipo de bicicleta</string>
+    <string name="bike_weight">Peso de bicicleta  (kg)</string>
+
+    <string name="continue_text">Continuar</string>
+
+    <string name="distance">Distancia (m)</string>
+    <string name="duration">Duración</string>
+
+    <string name="error_field_required">Este campo es obligatorio</string>
+    <string name="error_invalid_name">El nombre solo puede contener letras</string>
+
+    <string name="height">Estatura (cm)</string>
+
+    <string name="instant_power">Potencia instantánea (W)</string>
+
+    <string name="mountain">Montaña</string>
+
+    <string name="name">Nombre</string>
+
+    <string name="personal_information">Información personal</string>
+    <string name="power_average_3s">Potencia media 3s (W)</string>
+    <string name="power_average_5s">Potencia media 5s (W)</string>
+    <string name="power_average_10s">Potencia media 10s (W)</string>
+
+    <string name="road">Carretera</string>
+
+    <string name="speed">Velocidad (km/h)</string>
+    <string name="speed_rpm">Velocidad (rpm)</string>
+    <string name="start">Comenzar</string>
+    <string name="stop">Detener</string>
+
+    <string name="weight">Peso (kg)</string>
+</resources>

@@ -46,6 +46,40 @@ public final class MathUtils {
         return Math.round((float)bestSum / seg);
     }
 
+    public static <T extends Number, V extends Number> V interpolate(T x1, V y1, T x2, V y2, T v) {
+        double _x1 = x1.doubleValue();
+        double _y1 = y1.doubleValue();
+        double _x2 = x2.doubleValue();
+        double _y2 = y2.doubleValue();
+        if (_x1 >= _x2) throw new IllegalArgumentException();
+
+        final double m = (_y2 - _y1) / (_x2 - _x1);
+        final double n = _y1 - m * _x1;
+
+        final boolean isInt = y1 instanceof Integer;
+        final boolean isLong = y1 instanceof Long;
+        final boolean isFloat = y1 instanceof Float;
+        final boolean isDouble = y1 instanceof Double;
+
+        Number res = m * v.doubleValue() + n;
+
+        if (isDouble) {
+            return (V)(Number)res.doubleValue();
+        }
+        else if (isFloat) {
+            return (V)(Number)res.floatValue();
+        }
+        else if (isLong) {
+            return (V)(Number)res.longValue();
+        }
+        else if (isInt) {
+            return (V)(Number)res.intValue();
+        }
+        else {
+            throw  new RuntimeException();
+        }
+    }
+
     public static <T extends Number, V extends Number> Function<T, V> interpolate(T x1, V y1, T x2, V y2) {
 
         double _x1 = x1.doubleValue();

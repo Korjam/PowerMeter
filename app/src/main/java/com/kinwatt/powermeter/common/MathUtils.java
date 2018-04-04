@@ -51,28 +51,24 @@ public final class MathUtils {
         double _y1 = y1.doubleValue();
         double _x2 = x2.doubleValue();
         double _y2 = y2.doubleValue();
+
         if (_x1 >= _x2) throw new IllegalArgumentException();
 
         final double m = (_y2 - _y1) / (_x2 - _x1);
         final double n = _y1 - m * _x1;
 
-        final boolean isInt = y1 instanceof Integer;
-        final boolean isLong = y1 instanceof Long;
-        final boolean isFloat = y1 instanceof Float;
-        final boolean isDouble = y1 instanceof Double;
-
         Number res = m * v.doubleValue() + n;
 
-        if (isDouble) {
+        if (y1 instanceof Double) {
             return (V)(Number)res.doubleValue();
         }
-        else if (isFloat) {
+        else if (y1 instanceof Float) {
             return (V)(Number)res.floatValue();
         }
-        else if (isLong) {
+        else if (y1 instanceof Long) {
             return (V)(Number)res.longValue();
         }
-        else if (isInt) {
+        else if (y1 instanceof Integer) {
             return (V)(Number)res.intValue();
         }
         else {
@@ -81,41 +77,42 @@ public final class MathUtils {
     }
 
     public static <T extends Number, V extends Number> Function<T, V> interpolate(T x1, V y1, T x2, V y2) {
-
         double _x1 = x1.doubleValue();
         double _y1 = y1.doubleValue();
         double _x2 = x2.doubleValue();
         double _y2 = y2.doubleValue();
+
         if (_x1 >= _x2) throw new IllegalArgumentException();
 
         final double m = (_y2 - _y1) / (_x2 - _x1);
         final double n = _y1 - m * _x1;
 
-        final boolean isInt = y1 instanceof Integer;
-        final boolean isLong = y1 instanceof Long;
-        final boolean isFloat = y1 instanceof Float;
-        final boolean isDouble = y1 instanceof Double;
-
-        return new Function<T, V>() {
-            @Override
-            public V apply(T v) {
+        if (y1 instanceof Double) {
+            return v -> {
                 Number res = m * v.doubleValue() + n;
-                if (isDouble) {
-                    return (V)(Number)res.doubleValue();
-                }
-                else if (isFloat) {
-                    return (V)(Number)res.floatValue();
-                }
-                else if (isLong) {
-                    return (V)(Number)res.longValue();
-                }
-                else if (isInt) {
-                    return (V)(Number)res.intValue();
-                }
-                else {
-                    throw  new RuntimeException();
-                }
-            }
-        };
+                return (V)(Number)res.doubleValue();
+            };
+        }
+        else if (y1 instanceof Float) {
+            return v -> {
+                Number res = m * v.doubleValue() + n;
+                return (V)(Number)res.floatValue();
+            };
+        }
+        else if (y1 instanceof Long) {
+            return v -> {
+                Number res = m * v.doubleValue() + n;
+                return (V)(Number)res.longValue();
+            };
+        }
+        else if (y1 instanceof Integer) {
+            return v -> {
+                Number res = m * v.doubleValue() + n;
+                return (V)(Number)res.intValue();
+            };
+        }
+        else {
+            throw new RuntimeException("This exception never should be thrown.");
+        }
     }
 }

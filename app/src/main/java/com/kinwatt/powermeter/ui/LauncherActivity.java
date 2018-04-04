@@ -28,12 +28,7 @@ public class LauncherActivity extends AppCompatActivity {
 
         if (requestPermissions()) {
             final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    goToUserEdit();
-                }
-            }, 1000);
+            handler.postDelayed(() -> goToUserEdit(), 1000);
         }
     }
 

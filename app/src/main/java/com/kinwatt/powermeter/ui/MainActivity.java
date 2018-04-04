@@ -27,9 +27,7 @@ public class MainActivity extends AppCompatActivity implements ActivityView {
         setContentView(R.layout.activity_main);
 
         buttonStart = findViewById(R.id.button_start);
-        buttonStart.setOnClickListener(startButtonListener);
         buttonStop = findViewById(R.id.button_stop);
-        buttonStop.setOnClickListener(stopButtonListener);
 
         buttonStop.setEnabled(false);
 
@@ -41,6 +39,27 @@ public class MainActivity extends AppCompatActivity implements ActivityView {
         power3 = findViewById(R.id.power_3s);
         power5 = findViewById(R.id.power_5s);
         power10 = findViewById(R.id.power_10s);
+
+        buttonStart.setOnClickListener(v -> {
+            buttonStart.setEnabled(false);
+
+            duration.restart();
+            controller.start();
+
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+            buttonStop.setEnabled(true);
+        });
+        buttonStop.setOnClickListener(v -> {
+            buttonStop.setEnabled(false);
+
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+            duration.stop();
+            controller.stop();
+
+            buttonStart.setEnabled(true);
+        });
 
         controller = new ActivityController(this, this);
     }
@@ -80,32 +99,4 @@ public class MainActivity extends AppCompatActivity implements ActivityView {
     public void setPowerAverage10(float power) {
         this.power10.setValue(power);
     }
-
-    private View.OnClickListener startButtonListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            buttonStart.setEnabled(false);
-
-            duration.restart();
-            controller.start();
-
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-            buttonStop.setEnabled(true);
-        }
-    };
-
-    private View.OnClickListener stopButtonListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            buttonStop.setEnabled(false);
-
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-            duration.stop();
-            controller.stop();
-
-            buttonStart.setEnabled(true);
-        }
-    };
 }

@@ -45,16 +45,11 @@ public class LocationUtils {
                 p1.getTimestamp(), p1.getSpeed(),
                 p2.getTimestamp(), p2.getSpeed());
 
-        return new Function<Long, Position>() {
-            @Override
-            public Position apply(Long v) {
-                return new Position(latitude.apply(v),
-                        longitude.apply(v),
-                        altitude.apply(v),
-                        speed.apply(v),
-                        v);
-            }
-        };
+        return v -> new Position(latitude.apply(v),
+                longitude.apply(v),
+                altitude.apply(v),
+                speed.apply(v),
+                v);
     }
 
     public static Location interpolate(Location p1, Location p2, long v) {
@@ -96,17 +91,14 @@ public class LocationUtils {
 
         final String provider = p1.getProvider();
 
-        return new Function<Long, Location>() {
-            @Override
-            public Location apply(Long v) {
-                Location res = new Location(provider);
-                res.setLatitude(latitude.apply(v));
-                res.setLongitude(longitude.apply(v));
-                res.setAltitude(altitude.apply(v));
-                res.setSpeed(speed.apply(v));
-                res.setTime(v);
-                return res;
-            }
+        return v -> {
+            Location res = new Location(provider);
+            res.setLatitude(latitude.apply(v));
+            res.setLongitude(longitude.apply(v));
+            res.setAltitude(altitude.apply(v));
+            res.setSpeed(speed.apply(v));
+            res.setTime(v);
+            return res;
         };
     }
 

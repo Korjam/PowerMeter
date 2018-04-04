@@ -7,9 +7,9 @@ import com.kinwatt.powermeter.common.MathUtils;
 import com.kinwatt.powermeter.model.Buffer;
 import com.kinwatt.powermeter.data.Record;
 import com.kinwatt.powermeter.data.mappers.RecordMapper;
+import com.kinwatt.powermeter.model.CyclingOutdoorPowerAlgorithm;
 import com.kinwatt.powermeter.sensor.LocationListener;
 import com.kinwatt.powermeter.sensor.LocationProvider;
-import com.kinwatt.powermeter.model.PowerAlgorithm;
 import com.kinwatt.powermeter.model.PowerListener;
 import com.kinwatt.powermeter.model.PowerProvider;
 
@@ -51,7 +51,7 @@ public class ActivityController implements LocationListener, PowerListener {
         }
         */
         powerProvider = new PowerProvider(context, locationProvider);
-        powerProvider.setPowerAlgorithm(new PowerAlgorithm(null));
+        powerProvider.setPowerAlgorithm(new CyclingOutdoorPowerAlgorithm(null));
 
         /*
         BluetoothManager bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);

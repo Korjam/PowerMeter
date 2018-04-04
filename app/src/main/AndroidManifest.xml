@@ -13,7 +13,9 @@
         android:roundIcon="@drawable/ic_kinwatt"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
         <activity
             android:name=".ui.LauncherActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -21,17 +23,20 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.UserEditActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.MapActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
     </application>

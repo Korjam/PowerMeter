@@ -6,15 +6,21 @@ import java.util.List;
 public final class MathUtils {
 
     public static float average(Collection<Float> items) {
-        float res = 0;
+        double res = 0;
         for (float item : items) res += item;
-        return res / items.size();
+        return (float) (res / items.size());
     }
 
     public static float average(float... items) {
-        float res = 0;
+        double res = 0;
         for (float item : items) res += item;
-        return res / items.length;
+        return (float) (res / items.length);
+    }
+
+    public static double average(double... items) {
+        double res = 0;
+        for (double item : items) res += item / items.length;
+        return res;
     }
 
     public static float angularVelocity(float rpm) {

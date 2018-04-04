@@ -1,5 +1,7 @@
 package com.kinwatt.powermeter.data;
 
+import android.location.Location;
+
 import com.kinwatt.powermeter.common.MathUtils;
 
 public class Position implements Cloneable {
@@ -94,10 +96,28 @@ public class Position implements Cloneable {
     }
 
     public float getDistance(Position position) {
-        float dLat = (position.getLatitude() - this.getLatitude()) * geodesica_u;
-        float meanLat = MathUtils.average(this.getLatitude(), position.getLatitude());
-        float dLon = (float) ((position.getLongitude() - this.getLongitude()) * Math.sin(Math.toRadians(90 - meanLat)) * geodesica_u);
+        double dLat = (position.getLatitude() - this.getLatitude()) * geodesica_u;
+        double meanLat = MathUtils.average(this.getLatitude(), position.getLatitude());
+        double dLon = ((position.getLongitude() - this.getLongitude()) * Math.sin(Math.toRadians(90 - meanLat)) * geodesica_u);
         return (float) Math.sqrt(Math.pow(dLat, 2) + Math.pow(dLon, 2));
+    }
+
+    public static Position convert(Location location) {
+        Position res = new Position(
+                (float) location.getLatitude(),
+                (float) location.getLongitude(),
+                (float) location.getAltitude());
+        res.setSpeed(location.getSpeed());
+        return res;
+    }
+
+    public static Location convert(Position position) {
+        Location res = new Location("NULL");
+        res.setLatitude(position.getLatitude());
+        res.setLongitude(position.getLongitude());
+        res.setAltitude(position.getAltitude());
+        res.setSpeed(position.getSpeed());
+        return res;
     }
 
     @Override

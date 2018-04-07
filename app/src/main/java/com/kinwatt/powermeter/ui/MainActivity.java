@@ -1,6 +1,5 @@
 package com.kinwatt.powermeter.ui;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -9,7 +8,7 @@ import com.kinwatt.powermeter.R;
 import com.kinwatt.powermeter.ui.widget.ChronometerView;
 import com.kinwatt.powermeter.ui.widget.NumberView;
 
-public class MainActivity extends AppCompatActivity implements ActivityView {
+public class MainActivity extends ActivityBase implements ActivityView {
 
     private Button buttonStart, buttonStop;
 

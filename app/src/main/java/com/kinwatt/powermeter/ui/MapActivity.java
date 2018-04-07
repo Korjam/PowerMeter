@@ -19,7 +19,7 @@ import com.kinwatt.powermeter.data.Position;
 import com.kinwatt.powermeter.ui.widget.ChronometerView;
 import com.kinwatt.powermeter.ui.widget.NumberView;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapActivity extends ActivityBase implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 

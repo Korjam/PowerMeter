@@ -88,7 +88,7 @@ public class UserEditActivity extends AppCompatActivity {
             focusView = bikeWeightView;
         }
 
-        if (bikeTypeView.getCheckedRadioButtonId() != 0) {
+        if (bikeTypeView.getCheckedRadioButtonId() == 0) {
             RadioButton but =  findViewById(R.id.radio_mountain);
             but.setError(getString(R.string.error_field_required));
             focusView = bikeTypeView;

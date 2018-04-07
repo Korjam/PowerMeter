@@ -7,6 +7,8 @@ import com.kinwatt.powermeter.data.User;
 
 public class CyclingIndoorPowerAlgorithm extends PowerAlgorithm {
 
+    private static final float cRolling = 5.97f;
+    private static final float CdA = 0.179f;
     private static final double kinMass =  3.5f;
 
     public CyclingIndoorPowerAlgorithm(User user) {

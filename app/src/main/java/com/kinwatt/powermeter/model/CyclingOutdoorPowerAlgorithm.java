@@ -7,6 +7,14 @@ import com.kinwatt.powermeter.data.User;
 
 public class CyclingOutdoorPowerAlgorithm extends PowerAlgorithm {
 
+    //For now I'm setting the user's parameters here until we define the class User.
+    private static final float totalMass = 80;
+    private static final float gForce = 9.80665f;
+    private static final float cRolling = 0.004f;
+    private static final float CdA = 0.32f;
+    private static final float rho = 1.226f;
+    private static final float drag = CdA * rho / 2;
+
     public CyclingOutdoorPowerAlgorithm(User user) {
         super(user);
     }

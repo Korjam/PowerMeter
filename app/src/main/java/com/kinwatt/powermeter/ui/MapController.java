@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.widget.Toast;
 
 import com.kinwatt.powermeter.common.LocationUtils;
 import com.kinwatt.powermeter.common.MathUtils;
@@ -15,7 +16,7 @@ import com.kinwatt.powermeter.sensor.SpeedListener;
 import com.kinwatt.powermeter.sensor.bluetooth.SpeedAndCadenceClient;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,9 @@ public class MapController implements SpeedListener {
     private Timer timer;
     private TimerTask timerTask;
 
+    private Record track;
+    private List<Float> distances;
+
     public MapController(MapActivity activity) {
         this.activity = activity;
 
@@ -46,30 +50,41 @@ public class MapController implements SpeedListener {
         if (!bluetoothAdapter.isEnabled()) {
             bluetoothAdapter.enable();
         }
-        BluetoothDevice device = bluetoothAdapter.getRemoteDevice("");
+        //TODO: Allow select the device
+        BluetoothDevice device = bluetoothAdapter.getRemoteDevice("E2:4D:0F:B1:77:F4");
 
         speedProvider = new SpeedAndCadenceClient(activity, device);
+        speedProvider.addListener(this);
 
-        createTimer();
+        track = readTrack("gibralfaro.txt");
+        distances = getDistances(track);
     }
 
     public void start() {
-        speedProvider.addListener(this);
-        timer.schedule(timerTask, 1000);
+        activity.clearMap();
+        speedProvider.connect();
+        createTimer();
+        timer.schedule(timerTask, 1000, 1000);
+    }
+
+    public void stop() {
+        speedProvider.close();
+        timer.cancel();
     }
 
     @Override
-    public void onSpeedChanged(float speed) {
-        this.speed = speed;
+    public void onSpeedChanged(float rpm) {
+        // Speed in m/s
+        this.speed = rpm * 2.099f / 60;
     }
 
     private void createTimer() {
         timer = new Timer();
         timerTask = new TimerTask() {
-            private Record track = readTrack();
-            private List<Float> distances = getDistances(track);
             private float totalDistance = distances.get(distances.size() - 1);
             private float distance, speedOutdoor, lastSpeed;
+
+            private static final float MULTIPLIER = 4;
 
             @Override
             public void run() {
@@ -85,8 +100,14 @@ public class MapController implements SpeedListener {
 
                 speedOutdoor = outdoor.calculateSpeed(power, speedOutdoor, getGrade(p1, p2));
 
-                distance += speedOutdoor;
+                distance += speedOutdoor * MULTIPLIER;
+                distance = Math.min(distance, totalDistance);
                 lastSpeed = speed;
+
+                index = findIndex(distance, distances);
+                index = Math.min(index, distances.size() - 2);
+                p1 = track.getPositions().get(index);
+                p2 = track.getPositions().get(index + 1);
 
                 long time = MathUtils.interpolate(
                         distances.get(index),     p1.getTimestamp(),
@@ -94,7 +115,11 @@ public class MapController implements SpeedListener {
 
                 Position current = LocationUtils.interpolate(p1, p2, time);
 
-                activity.runOnUiThread(() -> activity.updateMap(current));
+                activity.runOnUiThread(() ->  {
+                    activity.setSpeed(speedOutdoor * 3.6f);
+                    activity.setPower(power);
+                    activity.updateMap(current);
+                });
 
                 if (distance >= totalDistance) {
                     timer.cancel();
@@ -117,7 +142,7 @@ public class MapController implements SpeedListener {
                 return i;
             }
         }
-        return value > values.get(values.size() - 1) ? values.size() : -1;
+        return value >= values.get(values.size() - 1) ? values.size() : -1;
     }
 
     private static double getGrade(Position p1, Position p2){
@@ -146,8 +171,25 @@ public class MapController implements SpeedListener {
         return res;
     }
 
-    private static Record readTrack() {
-        // TODO
-        throw new RuntimeException("Not implemented");
+    private Record readTrack(String filePath) {
+        Record track = new Record();
+        try{
+            BufferedReader br = new BufferedReader(new InputStreamReader(activity.getAssets().open(filePath)));
+
+            String strLine;
+            long time = 0;
+            while ((strLine = br.readLine()) != null)   {
+                String [] values = strLine.split(";");
+
+                Position p = new Position(Float.parseFloat(values[1]), Float.parseFloat(values[2]), Float.parseFloat(values[0]));
+                p.setTimestamp(time);
+                track.getPositions().add(p);
+                time += 1000;
+            }
+            br.close();
+        } catch (IOException e) {
+            Toast.makeText(activity, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+        return track;
     }
 }

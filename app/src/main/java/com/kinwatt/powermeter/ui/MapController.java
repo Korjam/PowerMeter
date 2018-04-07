@@ -10,6 +10,8 @@ import com.kinwatt.powermeter.common.LocationUtils;
 import com.kinwatt.powermeter.common.MathUtils;
 import com.kinwatt.powermeter.data.Position;
 import com.kinwatt.powermeter.data.Record;
+import com.kinwatt.powermeter.data.SensorData;
+import com.kinwatt.powermeter.data.provider.SensorProvider;
 import com.kinwatt.powermeter.model.CyclingIndoorPowerAlgorithm;
 import com.kinwatt.powermeter.model.CyclingOutdoorPowerAlgorithm;
 import com.kinwatt.powermeter.sensor.SpeedListener;
@@ -50,11 +52,16 @@ public class MapController implements SpeedListener {
         if (!bluetoothAdapter.isEnabled()) {
             bluetoothAdapter.enable();
         }
-        //TODO: Allow select the device
-        BluetoothDevice device = bluetoothAdapter.getRemoteDevice("E2:4D:0F:B1:77:F4");
 
-        speedProvider = new SpeedAndCadenceClient(activity, device);
-        speedProvider.addListener(this);
+        SensorProvider provider = SensorProvider.getProvider(activity);
+        SensorData data = provider.findSensor(SpeedAndCadenceClient.SERVICE_UUID);
+
+        if (data != null) {
+            BluetoothDevice device = bluetoothAdapter.getRemoteDevice(data.getAddress());
+
+            speedProvider = new SpeedAndCadenceClient(activity, device);
+            speedProvider.addListener(this);
+        }
 
         track = readTrack("gibralfaro.txt");
         distances = getDistances(track);

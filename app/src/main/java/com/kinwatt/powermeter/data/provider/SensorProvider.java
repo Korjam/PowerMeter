@@ -5,12 +5,14 @@ import android.hardware.Sensor;
 import android.widget.Toast;
 
 import com.kinwatt.powermeter.data.SensorData;
+import com.kinwatt.powermeter.data.ServiceData;
 import com.kinwatt.powermeter.data.mappers.SensorMapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class SensorProvider {
 
@@ -41,6 +43,17 @@ public class SensorProvider {
 
     public List<SensorData> getAll() {
         return sensors;
+    }
+
+    public SensorData findSensor(UUID serviceId) {
+        for (SensorData sensor : sensors) {
+            for (ServiceData service : sensor.getServices()) {
+                if (service.getUuid().equals(serviceId)) {
+                    return sensor;
+                }
+            }
+        }
+        return null;
     }
 
     public void add(SensorData sensor) {

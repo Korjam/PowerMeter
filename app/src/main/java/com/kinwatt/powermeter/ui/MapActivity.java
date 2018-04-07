@@ -22,6 +22,7 @@ import com.kinwatt.powermeter.ui.widget.NumberView;
 public class MapActivity extends ActivityBase implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private PolylineOptions options;
 
     private MapController controller;
 
@@ -77,7 +78,12 @@ public class MapActivity extends ActivityBase implements OnMapReadyCallback {
         controller = new MapController(this);
     }
 
-    private PolylineOptions options;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        controller.stop();
+    }
+
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 

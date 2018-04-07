@@ -8,8 +8,11 @@
     <string name="bike_type">Bike type</string>
     <string name="bike_weight">Bike weight</string>
 
+    <string name="cancel">Cancel</string>
+    <string name="connected_devices">Connected devices</string>
     <string name="continue_text">Continue</string>
 
+    <string name="devices">Devices</string>
     <string name="distance">Distance (m)</string>
     <string name="duration">Duration</string>
 
@@ -23,6 +26,7 @@
     <string name="mountain">Mountain</string>
 
     <string name="name">Name</string>
+    <string name="no_devices_connected">There isn\'t devices connected.</string>
 
     <string name="personal_information">Personal information</string>
     <string name="power_average_3s">Power average 3s (W)</string>
@@ -31,6 +35,10 @@
 
     <string name="road">Road</string>
 
+    <string name="scan">Scan</string>
+    <string name="search_devices">Search devices</string>
+    <string name="search_results">Search results</string>
+    <string name="searching_devices">Searching nearby devices</string>
     <string name="speed">Speed (km/h)</string>
     <string name="speed_rpm">Speed (rpm)</string>
     <string name="start">Start</string>

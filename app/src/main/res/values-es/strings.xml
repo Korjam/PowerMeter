@@ -6,10 +6,13 @@
 
     <string name="bike_data">Datos de bicicleta</string>
     <string name="bike_type">Tipo de bicicleta</string>
-    <string name="bike_weight">Peso de bicicleta  (kg)</string>
+    <string name="bike_weight">Peso de bicicleta (kg)</string>
 
+    <string name="cancel">Cancelar</string>
+    <string name="connected_devices">Dispositivos conectados</string>
     <string name="continue_text">Continuar</string>
 
+    <string name="devices">Dispositivos</string>
     <string name="distance">Distancia (m)</string>
     <string name="duration">Duración</string>
 
@@ -23,6 +26,7 @@
     <string name="mountain">Montaña</string>
 
     <string name="name">Nombre</string>
+    <string name="no_devices_connected">No hay dispositivos connectados</string>
 
     <string name="personal_information">Información personal</string>
     <string name="power_average_3s">Potencia media 3s (W)</string>
@@ -31,6 +35,10 @@
 
     <string name="road">Carretera</string>
 
+    <string name="scan">Escanear</string>
+    <string name="search_devices">Buscar dispositivos</string>
+    <string name="search_results">Resultados de la bísqueda</string>
+    <string name="searching_devices">Buscando dispositivos cercanos</string>
     <string name="speed">Velocidad (km/h)</string>
     <string name="speed_rpm">Velocidad (rpm)</string>
     <string name="start">Comenzar</string>

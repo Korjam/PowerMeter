@@ -10,6 +10,27 @@ public class LocationUtils {
 
     private static final float ALTITUDE_ERROR = 10;
 
+    public static Position interpolate(Position p1, Position p2, long v) {
+        float latitude = MathUtils.interpolate(
+                p1.getTimestamp(), p1.getLatitude(),
+                p2.getTimestamp(), p2.getLatitude(), v);
+        float longitude = MathUtils.interpolate(
+                p1.getTimestamp(), p1.getLongitude(),
+                p2.getTimestamp(), p2.getLongitude(), v);
+        float altitude = MathUtils.interpolate(
+                p1.getTimestamp(), p1.getAltitude(),
+                p2.getTimestamp(), p2.getAltitude(), v);
+        float speed = MathUtils.interpolate(
+                p1.getTimestamp(), p1.getSpeed(),
+                p2.getTimestamp(), p2.getSpeed(), v);
+
+        return new Position(latitude,
+                longitude,
+                altitude,
+                speed,
+                v);
+    }
+
     public static Function<Long, Position> interpolate(Position p1, Position p2) {
         final Function<Long, Float> latitude = MathUtils.interpolate(
                 p1.getTimestamp(), p1.getLatitude(),
@@ -24,16 +45,34 @@ public class LocationUtils {
                 p1.getTimestamp(), p1.getSpeed(),
                 p2.getTimestamp(), p2.getSpeed());
 
-        return new Function<Long, Position>() {
-            @Override
-            public Position apply(Long v) {
-                return new Position(latitude.apply(v),
-                        longitude.apply(v),
-                        altitude.apply(v),
-                        speed.apply(v),
-                        v);
-            }
-        };
+        return v -> new Position(latitude.apply(v),
+                longitude.apply(v),
+                altitude.apply(v),
+                speed.apply(v),
+                v);
+    }
+
+    public static Location interpolate(Location p1, Location p2, long v) {
+        double latitude = MathUtils.interpolate(
+                p1.getTime(), p1.getLatitude(),
+                p2.getTime(), p2.getLatitude(), v);
+        double longitude = MathUtils.interpolate(
+                p1.getTime(), p1.getLongitude(),
+                p2.getTime(), p2.getLongitude(), v);
+        double altitude = MathUtils.interpolate(
+                p1.getTime(), p1.getAltitude(),
+                p2.getTime(), p2.getAltitude(), v);
+        float speed = MathUtils.interpolate(
+                p1.getTime(), p1.getSpeed(),
+                p2.getTime(), p2.getSpeed(), v);
+
+        Location res = new Location(p1.getProvider());
+        res.setLatitude(latitude);
+        res.setLongitude(longitude);
+        res.setAltitude(altitude);
+        res.setSpeed(speed);
+        res.setTime(v);
+        return res;
     }
 
     public static Function<Long, Location> interpolate(Location p1, Location p2) {
@@ -52,27 +91,24 @@ public class LocationUtils {
 
         final String provider = p1.getProvider();
 
-        return new Function<Long, Location>() {
-            @Override
-            public Location apply(Long v) {
-                Location res = new Location(provider);
-                res.setLatitude(latitude.apply(v));
-                res.setLongitude(longitude.apply(v));
-                res.setAltitude(altitude.apply(v));
-                res.setSpeed(speed.apply(v));
-                res.setTime(v);
-                return res;
-            }
+        return v -> {
+            Location res = new Location(provider);
+            res.setLatitude(latitude.apply(v));
+            res.setLongitude(longitude.apply(v));
+            res.setAltitude(altitude.apply(v));
+            res.setSpeed(speed.apply(v));
+            res.setTime(v);
+            return res;
         };
     }
 
-    public static void suavice(List<Position> positions) {
+    public static void normalize(List<Position> positions) {
         for (int i = 0; i < positions.size(); i++) {
-            suavice(i, positions);
+            normalize(i, positions);
         }
     }
 
-    private static void suavice(int i, List<Position> positions) {
+    private static void normalize(int i, List<Position> positions) {
         Position position = positions.get(i);
         Position previous = i > 0 ? positions.get(i - 1) : null;
 

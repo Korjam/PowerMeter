@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.kinwatt.powermeter.R;
+import com.kinwatt.powermeter.data.provider.SensorProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +25,14 @@ public class LauncherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
+        // Bootstrap
+        SensorProvider.getProvider(this);
+
         permissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
 
         if (requestPermissions()) {
             final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    goToUserEdit();
-                }
-            }, 1000);
+            handler.postDelayed(() -> goToUserEdit(), 1000);
         }
     }
 

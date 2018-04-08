@@ -51,17 +51,14 @@ public class UserEditActivity extends AppCompatActivity {
             goToMain();
         }
 
-        continueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (validateData()) {
-                    try {
-                        UserMapper.save(user, userFile);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    goToMain();
+        continueButton.setOnClickListener(v -> {
+            if (validateData()) {
+                try {
+                    UserMapper.save(user, userFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+                goToMain();
             }
         });
 
@@ -91,7 +88,7 @@ public class UserEditActivity extends AppCompatActivity {
             focusView = bikeWeightView;
         }
 
-        if (bikeTypeView.getCheckedRadioButtonId() <= 0) {
+        if (bikeTypeView.getCheckedRadioButtonId() == 0) {
             RadioButton but =  findViewById(R.id.radio_mountain);
             but.setError(getString(R.string.error_field_required));
             focusView = bikeTypeView;

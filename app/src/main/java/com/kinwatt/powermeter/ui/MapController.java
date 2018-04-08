@@ -41,8 +41,12 @@ public class MapController implements SpeedListener {
     private Record track;
     private List<Float> distances;
 
+    private boolean running;
+
     public MapController(MapActivity activity) {
         this.activity = activity;
+
+        running = false;
 
         indoor = new CyclingIndoorPowerAlgorithm(null);
         outdoor = new CyclingOutdoorPowerAlgorithm(null);
@@ -68,15 +72,21 @@ public class MapController implements SpeedListener {
     }
 
     public void start() {
-        activity.clearMap();
-        speedProvider.connect();
-        createTimer();
-        timer.schedule(timerTask, 1000, 1000);
+        if (!running) {
+            activity.clearMap();
+            speedProvider.connect();
+            createTimer();
+            timer.schedule(timerTask, 1000, 1000);
+            running = true;
+        }
     }
 
     public void stop() {
-        speedProvider.close();
-        timer.cancel();
+        if (running) {
+            speedProvider.close();
+            timer.cancel();
+            running = false;
+        }
     }
 
     @Override

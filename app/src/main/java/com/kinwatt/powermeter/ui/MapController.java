@@ -74,9 +74,10 @@ public class MapController implements SpeedListener {
     public void start() {
         if (!running) {
             activity.clearMap();
+            activity.updateMap(track.getPositions().get(0));
             speedProvider.connect();
             createTimer();
-            timer.schedule(timerTask, 1000, 1000);
+            timer.schedule(timerTask, 0, 1000);
             running = true;
         }
     }
@@ -121,8 +122,7 @@ public class MapController implements SpeedListener {
                 distance = Math.min(distance, totalDistance);
                 lastSpeed = speed;
 
-                index = findIndex(distance, distances);
-                index = Math.min(index, distances.size() - 2);
+                index = Math.min(findIndex(distance, distances), distances.size() - 2);
                 p1 = track.getPositions().get(index);
                 p2 = track.getPositions().get(index + 1);
 
@@ -136,11 +136,13 @@ public class MapController implements SpeedListener {
                     activity.setSpeed(speedOutdoor * 3.6f);
                     activity.setPower(power);
                     activity.updateMap(current);
+                    if (distance >= totalDistance) {
+                        activity.stopTimer();
+                    }
                 });
 
                 if (distance >= totalDistance) {
-                    timer.cancel();
-                    speedProvider.removeListener(MapController.this);
+                    stop();
                 }
             }
         };

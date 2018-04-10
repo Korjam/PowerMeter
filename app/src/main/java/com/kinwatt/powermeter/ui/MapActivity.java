@@ -1,7 +1,6 @@
 package com.kinwatt.powermeter.ui;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -12,6 +11,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.RoundCap;
 import com.kinwatt.powermeter.R;
@@ -23,6 +23,7 @@ public class MapActivity extends ActivityBase implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private PolylineOptions options;
+    private Polyline line;
 
     private MapController controller;
 
@@ -106,11 +107,24 @@ public class MapActivity extends ActivityBase implements OnMapReadyCallback {
         if (mMap != null) {
             mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(position.getLatitude(), position.getLongitude())));
 
-            options.add(new LatLng(position.getLatitude(), position.getLongitude()));
+            LatLng point = new LatLng(position.getLatitude(), position.getLongitude());
 
-            mMap.clear();
-            mMap.addPolyline(options);
+            if (!options.getPoints().contains(point)) {
+                options.add(point);
+            }
+
+            Polyline newLine = mMap.addPolyline(options);
+            if (line != null) {
+                line.remove();
+            }
+            line = newLine;
         }
+    }
+
+    public void stopTimer() {
+        duration.stop();
+        buttonStop.setEnabled(false);
+        buttonStart.setEnabled(true);
     }
 
     public void setSpeed(float speed) {

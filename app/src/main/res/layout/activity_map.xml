@@ -51,6 +51,7 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:text="--"
+            android:textAlignment="textEnd"
             android:textAppearance="@android:style/TextAppearance.Material.Display1" />
 
         <com.kinwatt.powermeter.ui.widget.NumberView
@@ -62,6 +63,7 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:text="--"
+            android:textAlignment="textEnd"
             android:textAppearance="@android:style/TextAppearance.Material.Display1" />
 
     </LinearLayout>

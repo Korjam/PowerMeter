@@ -52,7 +52,7 @@ public class SpeedAndCadenceClient extends GattClientBase {
             lastRpm = rpm;
         }
 
-        lastMeasure = (SpeedAndCadenceMeasure)characteristic;
+        lastMeasure = currentMeasure;
     }
 
     @Override

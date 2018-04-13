@@ -88,7 +88,7 @@ public class MapActivity extends ActivityBase implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        //mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         LatLng malaga = new LatLng(36.7161622, -4.4233658);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(malaga));
@@ -96,7 +96,7 @@ public class MapActivity extends ActivityBase implements OnMapReadyCallback {
 
         options = new PolylineOptions()
                 .width(15)
-                .color(Color.BLUE)
+                .color(getResources().getColor(R.color.colorPrimary))
                 .geodesic(true)
                 .jointType(JointType.ROUND)
                 .startCap(new RoundCap())

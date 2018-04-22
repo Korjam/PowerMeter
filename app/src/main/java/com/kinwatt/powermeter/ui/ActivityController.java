@@ -4,22 +4,16 @@ import android.content.Context;
 import android.location.Location;
 
 import com.kinwatt.powermeter.common.MathUtils;
-import com.kinwatt.powermeter.model.Buffer;
 import com.kinwatt.powermeter.data.Record;
-import com.kinwatt.powermeter.data.mappers.RecordMapper;
+import com.kinwatt.powermeter.data.provider.RecordProvider;
+import com.kinwatt.powermeter.model.Buffer;
 import com.kinwatt.powermeter.model.CyclingOutdoorPowerAlgorithm;
-import com.kinwatt.powermeter.sensor.LocationListener;
-import com.kinwatt.powermeter.sensor.LocationProvider;
 import com.kinwatt.powermeter.model.PowerListener;
 import com.kinwatt.powermeter.model.PowerProvider;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
+import com.kinwatt.powermeter.sensor.LocationListener;
+import com.kinwatt.powermeter.sensor.LocationProvider;
 
 public class ActivityController implements LocationListener, PowerListener {
-
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
     private Context context;
     private ActivityView view;
@@ -31,6 +25,7 @@ public class ActivityController implements LocationListener, PowerListener {
     private PowerProvider powerProvider;
     private Buffer<Float> powers = new Buffer<>(10);
 
+    private RecordProvider recordProvider;
     private Record record;
 
     private boolean running = false;
@@ -38,6 +33,8 @@ public class ActivityController implements LocationListener, PowerListener {
     public ActivityController(Context context, ActivityView view) {
         this.context = context;
         this.view = view;
+
+        recordProvider = RecordProvider.getProvider(context);
 
         locationProvider = LocationProvider.createProvider(context, LocationProvider.FUSED_PROVIDER);
         /*
@@ -81,11 +78,7 @@ public class ActivityController implements LocationListener, PowerListener {
             locationProvider.stop();
             powerProvider.reset();
 
-            try {
-                saveRecord(record);
-            } catch (IOException e) {
-                throw new RuntimeException(e.getMessage(), e);
-            }
+            recordProvider.add(record);
         }
     }
 
@@ -118,13 +111,5 @@ public class ActivityController implements LocationListener, PowerListener {
                 }
             }
         }
-    }
-
-    private void saveRecord(Record record) throws IOException {
-        RecordMapper.save(record, getFile(record));
-    }
-
-    private File getFile(Record item) {
-        return new File(context.getFilesDir(), String.format("%s_%s.json", item.getName(), DATE_FORMAT.format(item.getDate())));
     }
 }

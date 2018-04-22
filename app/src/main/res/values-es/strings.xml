@@ -27,6 +27,7 @@
 
     <string name="name">Nombre</string>
     <string name="no_devices_connected">No hay dispositivos connectados</string>
+    <string name="no_records">Aun no hay actividades registradas.</string>
 
     <string name="personal_information">Información personal</string>
     <string name="power_average_3s">Potencia media 3s (W)</string>
@@ -40,6 +41,7 @@
     <string name="search_results">Resultados de la bísqueda</string>
     <string name="searching_devices">Buscando dispositivos cercanos</string>
     <string name="speed">Velocidad (km/h)</string>
+    <string name="speed_average">Velocidad media</string>
     <string name="speed_rpm">Velocidad (rpm)</string>
     <string name="start">Comenzar</string>
     <string name="stop">Detener</string>

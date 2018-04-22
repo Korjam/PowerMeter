@@ -26,8 +26,8 @@
     <string name="mountain">Mountain</string>
 
     <string name="name">Name</string>
-    <string name="no_devices_connected">There isn\'t devices connected.</string>
-    <string name="no_records">There isn\'t activities registered yet.</string>
+    <string name="no_devices_connected">There aren\'t devices connected.</string>
+    <string name="no_records">There aren\'t activities registered yet.</string>
 
     <string name="personal_information">Personal information</string>
     <string name="power_average_3s">Power average 3s (W)</string>

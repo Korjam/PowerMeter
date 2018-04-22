@@ -4,6 +4,7 @@
     <string name="altitude">Altitude (m)</string>
     <string name="age">Age</string>
 
+    <string name="back">Back</string>
     <string name="bike_data">Bike data</string>
     <string name="bike_type">Bike type</string>
     <string name="bike_weight">Bike weight</string>
@@ -19,6 +20,8 @@
     <string name="error_field_required">This field is requiered</string>
     <string name="error_invalid_name">Name only can contains letters</string>
 
+    <string name="finish">Finish</string>
+
     <string name="height">Height</string>
 
     <string name="instant_power">Instant power (W)</string>
@@ -26,6 +29,8 @@
     <string name="mountain">Mountain</string>
 
     <string name="name">Name</string>
+    <string name="next">Next</string>
+    <string name="no">No</string>
     <string name="no_devices_connected">There aren\'t devices connected.</string>
     <string name="no_records">There aren\'t activities registered yet.</string>
 
@@ -34,7 +39,23 @@
     <string name="power_average_5s">Power average 5s (W)</string>
     <string name="power_average_10s">Power average 10s (W)</string>
 
+    <string name="question_cycling">How do you do cycling?</string>
+    <string name="question_kilometers">How many kilometers you travel by bike in a year?</string>
+    <string name="question_powermeter">Do you use a powermeter?</string>
+    <string name="question_suggestions">Suggestions</string>
+
+    <string name="q_price">High price</string>
+    <string name="q_data">I\'m not interest in power</string>
+    <string name="q_installation">Installation difficult</string>
+    <string name="q_other">Others...</string>
+
+    <string name="q_roller">Power in any roller</string>
+    <string name="q_aerodynamics">Aerodynamics measure (position)</string>
+    <string name="q_strava">Strava live segments</string>
+    <string name="q_videogames">Use of roller in videogames</string>
+
     <string name="road">Road</string>
+    <string name="roller">Roller</string>
 
     <string name="scan">Scan</string>
     <string name="search_devices">Search devices</string>
@@ -43,8 +64,17 @@
     <string name="speed">Speed (km/h)</string>
     <string name="speed_average">Speed average</string>
     <string name="speed_rpm">Speed (rpm)</string>
+    <string name="spinning">Spinning</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
 
+    <string name="velodrome">Velodrome</string>
+
     <string name="weight">Weight</string>
+    <string name="why">Why?</string>
+
+    <string name="yes">Yes</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

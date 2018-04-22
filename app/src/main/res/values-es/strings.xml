@@ -4,6 +4,7 @@
     <string name="altitude">Altitud (m)</string>
     <string name="age">Edad</string>
 
+    <string name="back">Atrás</string>
     <string name="bike_data">Datos de bicicleta</string>
     <string name="bike_type">Tipo de bicicleta</string>
     <string name="bike_weight">Peso de bicicleta (kg)</string>
@@ -19,6 +20,8 @@
     <string name="error_field_required">Este campo es obligatorio</string>
     <string name="error_invalid_name">El nombre solo puede contener letras</string>
 
+    <string name="finish">Finalizar</string>
+
     <string name="height">Estatura (cm)</string>
 
     <string name="instant_power">Potencia instantánea (W)</string>
@@ -26,6 +29,8 @@
     <string name="mountain">Montaña</string>
 
     <string name="name">Nombre</string>
+    <string name="next">Siguiente</string>
+    <string name="no">No</string>
     <string name="no_devices_connected">No hay dispositivos connectados</string>
     <string name="no_records">Aun no hay actividades registradas.</string>
 
@@ -34,7 +39,23 @@
     <string name="power_average_5s">Potencia media 5s (W)</string>
     <string name="power_average_10s">Potencia media 10s (W)</string>
 
+    <string name="question_cycling">¿Cómo haces ciclismo?</string>
+    <string name="question_kilometers">¿Cuántos kilómetros recorres al año?</string>
+    <string name="question_powermeter">¿Utilizas potenciómetro?</string>
+    <string name="question_suggestions">Sugerencias</string>
+
+    <string name="q_price">Precio elevado</string>
+    <string name="q_data">No me interesa la potencia</string>
+    <string name="q_installation">La instalación es difícil</string>
+    <string name="q_other">Otros...</string>
+
+    <string name="q_roller">Potencia en cualquier rodillo</string>
+    <string name="q_aerodynamics">Medición aerodinámica (postura)</string>
+    <string name="q_strava">Segmentos en vivo de Strava</string>
+    <string name="q_videogames">Jugar a videojuegos con el rodillo</string>
+
     <string name="road">Carretera</string>
+    <string name="roller">Rodillo</string>
 
     <string name="scan">Escanear</string>
     <string name="search_devices">Buscar dispositivos</string>
@@ -43,8 +64,14 @@
     <string name="speed">Velocidad (km/h)</string>
     <string name="speed_average">Velocidad media</string>
     <string name="speed_rpm">Velocidad (rpm)</string>
+    <string name="spinning">Spinning</string>
     <string name="start">Comenzar</string>
     <string name="stop">Detener</string>
 
+    <string name="velodrome">Velódromo</string>
+
     <string name="weight">Peso (kg)</string>
+    <string name="why">¿Por qué?</string>
+
+    <string name="yes">Si</string>
 </resources>

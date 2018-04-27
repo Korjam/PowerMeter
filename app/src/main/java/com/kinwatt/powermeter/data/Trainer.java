@@ -1,11 +1,58 @@
-package com.kinwatt.powermeter.model;
+package com.kinwatt.powermeter.data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class IndoorTrainer {
 
-    public static double[] calibrateTrainer(List<Float> speed, List<Integer> power){
+public class Trainer {
+
+    private String make;
+    private String model;
+    private double cRolling;
+    private double CdA;
+    private double kinMass;
+
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public double getcRolling() {
+        return cRolling;
+    }
+
+    public void setcRolling(double cRolling) {
+        this.cRolling = cRolling;
+    }
+
+    public double getCdA() {
+        return CdA;
+    }
+
+    public void setCdA(double cdA) {
+        CdA = cdA;
+    }
+
+    public double getKinMass() {
+        return kinMass;
+    }
+
+    public void setKinMass(double kinMass) {
+        this.kinMass = kinMass;
+    }
+
+    public void calibrateTrainer(List<Float> speed, List<Integer> power){
 
         //remove pairs (speed,power) in which power=0
         for (int i = power.size() - 1; i >= 0; i--) {
@@ -63,10 +110,11 @@ public final class IndoorTrainer {
             CdA += pseudoinverse[1][i] * power.get(i);
         }
 
-        double[] coef = new double[2];
-        coef[0] = Crr;
-        coef[1]= CdA;
-
-        return coef;
+        this.cRolling = Crr;
+        this.CdA = CdA;
     }
+
+
+
+
 }

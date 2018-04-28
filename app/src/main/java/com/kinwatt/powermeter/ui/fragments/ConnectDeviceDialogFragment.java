@@ -10,6 +10,7 @@ import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.ParcelUuid;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -37,9 +38,8 @@ public class ConnectDeviceDialogFragment extends DialogFragment {
 
     private BluetoothDeviceFragment fragment;
 
-    private BluetoothManager bluetoothManager;
-    private BluetoothAdapter bluetoothAdapter;
     private BluetoothLeScanner bluetoothLeScanner;
+    private Handler handler;
 
     private Button cancelButton;
     private Button startStopButton;
@@ -56,9 +56,14 @@ public class ConnectDeviceDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        bluetoothManager = (BluetoothManager) getActivity().getSystemService(Context.BLUETOOTH_SERVICE);
-        bluetoothAdapter = bluetoothManager.getAdapter();
+        handler = new Handler();
+
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
+
+        if (!bluetoothAdapter.isEnabled()) {
+            bluetoothAdapter.enable();
+        }
     }
 
     @Override
@@ -94,9 +99,7 @@ public class ConnectDeviceDialogFragment extends DialogFragment {
                 startScan();
             }
         });
-        cancelButton.setOnClickListener(v -> {
-            dismiss();
-        });
+        cancelButton.setOnClickListener(v -> dismiss());
 
         progressBar = view.findViewById(R.id.bluetooth_progress_bar);
 
@@ -143,6 +146,12 @@ public class ConnectDeviceDialogFragment extends DialogFragment {
             startStopButton.setText(R.string.stop);
 
             title.setText(R.string.searching_devices);
+
+            handler.postDelayed(() -> {
+                if (searching) {
+                    stopScan();
+                }
+            }, 15000);
         }
     }
 

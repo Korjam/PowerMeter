@@ -18,7 +18,12 @@ public class CyclingOutdoorPowerAlgorithm extends PowerAlgorithm {
 
     public CyclingOutdoorPowerAlgorithm(User user) {
         super(user);
-        totalMass = user.getWeight() + user.getBikes().get(0).getWeight();
+        if (user != null) {
+            totalMass = user.getWeight() + user.getBikes().get(0).getWeight();
+        }
+        else {
+            totalMass = 80;
+        }
     }
 
     @Override

@@ -1,6 +1,12 @@
 package com.kinwatt.powermeter.ui;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +27,8 @@ import java.util.List;
 public class DevicesActivity extends AppCompatActivity implements BluetoothDeviceFragment.OnListFragmentInteractionListener {
 
     private DeviceFragment deviceFragment;
+
+    private BluetoothAdapter bluetoothAdapter;
 
     private TextView noDevices;
 
@@ -47,6 +55,16 @@ public class DevicesActivity extends AppCompatActivity implements BluetoothDevic
         else {
             noDevices.setVisibility(View.GONE);
         }
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!bluetoothAdapter.isEnabled()) {
+            registerReceiver(broadcastReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+
+            startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 1);
+        }
+
+        BluetoothLeScanner bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
+        connectButton.setEnabled(bluetoothLeScanner != null);
     }
 
     @Override
@@ -71,4 +89,20 @@ public class DevicesActivity extends AppCompatActivity implements BluetoothDevic
 
         return sensor;
     }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+
+            if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
+                final int bluetoothState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
+                if (bluetoothState == BluetoothAdapter.STATE_ON) {
+                    BluetoothLeScanner bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
+                    connectButton.setEnabled(bluetoothLeScanner != null);
+                    unregisterReceiver(this);
+                }
+            }
+        }
+    };
 }

@@ -18,6 +18,7 @@
             android:value="@string/google_maps_key" />
         <activity
             android:name=".ui.LauncherActivity"
+            android:noHistory="true"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -33,6 +34,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.UserEditActivity"
+            android:noHistory="true"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity

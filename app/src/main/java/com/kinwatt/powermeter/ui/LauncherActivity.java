@@ -58,6 +58,5 @@ public class LauncherActivity extends AppCompatActivity {
     private void goToUserEdit() {
         Intent intent = new Intent(this, UserEditActivity.class);
         startActivity(intent);
-        finish();
     }
 }

@@ -12,6 +12,8 @@ public class Trainer {
     private double CdA;
     private double kinMass;
 
+    public Trainer(){}
+
     public String getMake() {
         return make;
     }

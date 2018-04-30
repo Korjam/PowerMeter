@@ -2,6 +2,7 @@ package com.kinwatt.powermeter.data.mappers;
 
 import com.kinwatt.powermeter.data.Bike;
 import com.kinwatt.powermeter.data.BikeType;
+import com.kinwatt.powermeter.data.Trainer;
 import com.kinwatt.powermeter.data.User;
 
 import org.json.JSONArray;
@@ -26,6 +27,14 @@ public class UserMapper {
 
     private static final String BIKES_TAG = "bikes";
     private static final String BIKE_TYPE_TAG = "bikeType";
+
+    private static final String TRAINER_TAG = "trainers";
+    private static final String TRAINER_MAKE_TAG = "trainerMake";
+    private static final String TRAINER_MODEL_TAG = "trainerModel";
+    private static final String TRAINER_CDA_TAG = "trainerCdA";
+    private static final String TRAINER_CRR_TAG = "trainerCrr";
+    private static final String TRAINER_KINETIC_TAG = "trainerKinetic";
+
 
     public static void save(User user, String filePath) throws IOException {
         save(user, new File(filePath));
@@ -65,6 +74,17 @@ public class UserMapper {
         }
         base.put(BIKES_TAG, bikes);
 
+        JSONArray trainers = new JSONArray();
+        for (Trainer trainer : user.getTrainers()){
+            trainers.put(new JSONObject()
+                    .put(TRAINER_MAKE_TAG, trainer.getMake())
+                    .put(TRAINER_MODEL_TAG, trainer.getModel())
+                    .put(TRAINER_CDA_TAG, trainer.getCdA())
+                    .put(TRAINER_CRR_TAG, trainer.getcRolling())
+                    .put(TRAINER_KINETIC_TAG, trainer.getKinMass()));
+        }
+        base.put(TRAINER_TAG, trainers);
+
         return base;
     }
 
@@ -101,6 +121,18 @@ public class UserMapper {
                 bike.setType(BikeType.valueOf(item.getString(BIKE_TYPE_TAG)));
                 user.getBikes().add(bike);
             }
+
+            JSONArray trainers = object.getJSONArray(TRAINER_TAG);
+            for (int i = 0; i < trainers.length(); i++){
+                JSONObject item = trainers.getJSONObject(i);
+                Trainer trainer = new Trainer();
+                trainer.setMake(item.getString(TRAINER_MAKE_TAG));
+                trainer.setModel(item.getString(TRAINER_MODEL_TAG));
+                trainer.setCdA(item.getDouble(TRAINER_CDA_TAG));
+                trainer.setcRolling(item.getDouble(TRAINER_CRR_TAG));
+                trainer.setKinMass(item.getDouble(TRAINER_KINETIC_TAG));
+            }
+
 
             return user;
         } catch (JSONException e) {

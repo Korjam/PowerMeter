@@ -10,9 +10,11 @@ public class User {
     private float weight;
     private int height;
     private List<Bike> bikes;
+    private List<Trainer> trainers;
 
     public User() {
         bikes = new ArrayList<>();
+        trainers = new ArrayList<>();
     }
 
     public String getName() {
@@ -46,4 +48,11 @@ public class User {
     public List<Bike> getBikes() {
         return bikes;
     }
+
+    public List<Trainer> getTrainers() {
+        return trainers;
+    }
+
+
+
 }

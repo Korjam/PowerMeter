@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Kinwatt</string>
+    <string name="app_name" translatable="false">Kinwatt</string>
     <string name="altitude">Altitude (m)</string>
     <string name="age">Age</string>
 
@@ -26,7 +26,8 @@
     <string name="mountain">Mountain</string>
 
     <string name="name">Name</string>
-    <string name="no_devices_connected">There isn\'t devices connected.</string>
+    <string name="no_devices_connected">There aren\'t devices connected.</string>
+    <string name="no_records">There aren\'t activities registered yet.</string>
 
     <string name="personal_information">Personal information</string>
     <string name="power_average_3s">Power average 3s (W)</string>
@@ -40,6 +41,7 @@
     <string name="search_results">Search results</string>
     <string name="searching_devices">Searching nearby devices</string>
     <string name="speed">Speed (km/h)</string>
+    <string name="speed_average">Speed average</string>
     <string name="speed_rpm">Speed (rpm)</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>

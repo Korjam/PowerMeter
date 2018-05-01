@@ -131,6 +131,7 @@ public class UserMapper {
                 trainer.setCdA(item.getDouble(TRAINER_CDA_TAG));
                 trainer.setcRolling(item.getDouble(TRAINER_CRR_TAG));
                 trainer.setKinMass(item.getDouble(TRAINER_KINETIC_TAG));
+                user.getTrainers().add(trainer);
             }
 
 

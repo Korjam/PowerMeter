@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 import com.kinwatt.powermeter.R;
 import com.kinwatt.powermeter.data.Bike;
 import com.kinwatt.powermeter.data.BikeType;
+import com.kinwatt.powermeter.data.Trainer;
 import com.kinwatt.powermeter.data.User;
 import com.kinwatt.powermeter.data.mappers.UserMapper;
 
@@ -141,6 +142,15 @@ public class UserEditActivity extends AppCompatActivity {
             bike.setWeight(Float.parseFloat(bikeWeight));
 
             user.getBikes().add(bike);
+
+            Trainer trainer = new Trainer();
+            trainer.setMake("Unknown trainer");
+            trainer.setModel("Generic wind");
+            trainer.setcRolling(1.3730031);
+            trainer.setCdA(0.0022065);
+            trainer.setKinMass(0);
+
+            user.getTrainers().add(trainer);
         }
 
         return res;

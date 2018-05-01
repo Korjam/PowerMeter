@@ -75,7 +75,7 @@ public class IndoorActivity extends ActivityBase implements OnMapReadyCallback {
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        controller = new IndoorController(this);
+        controller = new IndoorController(this,this);
     }
 
     @Override

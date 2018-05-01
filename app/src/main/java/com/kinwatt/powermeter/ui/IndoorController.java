@@ -30,9 +30,9 @@ import java.util.TimerTask;
 
 public class IndoorController implements SpeedListener {
 
-
     private IndoorActivity activity;
-
+    private Context context;
+    private User user;
     private CyclingIndoorPowerAlgorithm indoor;
     private CyclingOutdoorPowerAlgorithm outdoor;
 
@@ -47,12 +47,22 @@ public class IndoorController implements SpeedListener {
 
     private boolean running;
 
-    public IndoorController(IndoorActivity activity) {
+    public IndoorController(Context context, IndoorActivity activity) {
         this.activity = activity;
+        this.context = context;
+        File userFile;
         running = false;
 
-        indoor = new CyclingIndoorPowerAlgorithm(null);
-        outdoor = new CyclingOutdoorPowerAlgorithm(null);
+        userFile = new File(context.getFilesDir(), "user_data.json");
+        try{
+            user = UserMapper.load(userFile);
+        } catch (IOException e) {
+            user = null;
+            e.printStackTrace();
+        }
+
+        indoor = new CyclingIndoorPowerAlgorithm(user);
+        outdoor = new CyclingOutdoorPowerAlgorithm(user);
 
         BluetoothManager bluetoothManager = (BluetoothManager) activity.getSystemService(Context.BLUETOOTH_SERVICE);
         BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();

@@ -28,11 +28,11 @@ public class CyclingOutdoorPowerAlgorithm extends PowerAlgorithm {
             float percent = 1;
             switch (currentBike.getType()){
                 case Road:
-                    percent = 0.8;
+                    percent = 0.8f;
                     cRolling = 0.004f;
                     break;
                 case Mountain:
-                    percent = 1;
+                    percent = 1f;
                     cRolling = 0.008f;
                     break;
             }

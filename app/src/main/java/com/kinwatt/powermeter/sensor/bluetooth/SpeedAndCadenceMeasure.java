@@ -46,17 +46,31 @@ public class SpeedAndCadenceMeasure extends Characteristic {
     }
 
     public float getRpm(SpeedAndCadenceMeasure csc) {
-        float dt = this.wheelRevolutionsEventTime - csc.wheelRevolutionsEventTime;
-        float dr = this.wheelRevolutions - csc.wheelRevolutions;
+        float rpm;
+        if (this.wheelRevolutionsEventTime < csc.wheelRevolutionsEventTime) {
+            rpm = csc.getRpm(this);
+        }
+        else {
+            float dt = this.wheelRevolutionsEventTime - csc.wheelRevolutionsEventTime;
+            float dr = this.wheelRevolutions - csc.wheelRevolutions;
 
-        return Math.abs(dr / dt * 60);
+            rpm = dr / dt * 60;
+        }
+        return rpm;
     }
 
     public float getCadence(SpeedAndCadenceMeasure csc) {
-        float dt = this.crankRevolutionsEventTime - csc.crankRevolutionsEventTime;
-        float dr = this.crankRevolutions - csc.crankRevolutions;
+        float cadence;
+        if (this.wheelRevolutionsEventTime < csc.wheelRevolutionsEventTime) {
+            cadence = csc.getCadence(this);
+        }
+        else {
+            float dt = this.crankRevolutionsEventTime - csc.crankRevolutionsEventTime;
+            float dr = this.crankRevolutions - csc.crankRevolutions;
 
-        return Math.abs(dr / dt);
+            cadence = dr / dt;
+        }
+        return cadence;
     }
 
     @Override

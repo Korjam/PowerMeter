@@ -3,6 +3,7 @@ package com.kinwatt.powermeter.model;
 import android.location.Location;
 
 import com.kinwatt.powermeter.common.MathUtils;
+import com.kinwatt.powermeter.data.Bike;
 import com.kinwatt.powermeter.data.BikeType;
 import com.kinwatt.powermeter.data.User;
 
@@ -21,16 +22,22 @@ public class CyclingOutdoorPowerAlgorithm extends PowerAlgorithm {
     public CyclingOutdoorPowerAlgorithm(User user) {
         super(user);
         if (user != null) {
-            totalMass = user.getWeight() + user.getBikes().get(0).getWeight();
-            switch (user.getBikes().get(0).getType()){
+            Bike currentBike = user.getBikes().get(0);
+            totalMass = user.getWeight() + currentBike.getWeight();
+            
+            float percent = 1;
+            switch (currentBike.getType()){
                 case Road:
-                    CdA = (float) (0.8 * (0.0285 * Math.pow(user.getHeight()/100,0.725) * Math.pow(user.getWeight(),0.425) + 0.17));
+                    percent = 0.8f;
                     cRolling = 0.004f;
                     break;
                 case Mountain:
-                    CdA = (float) (1 * (0.0285 * Math.pow(user.getHeight()/100,0.725) * Math.pow(user.getWeight(),0.425) + 0.17));
+                    percent = 1f;
                     cRolling = 0.008f;
+                    break;
             }
+            CdA = (float) (percent * (0.0285 * Math.pow(user.getHeight() / 100, 0.725) *
+                                               Math.pow(user.getWeight(), 0.425) + 0.17));
         }
         else {
             totalMass = 80;
@@ -38,8 +45,6 @@ public class CyclingOutdoorPowerAlgorithm extends PowerAlgorithm {
             cRolling = 0.005f;
         }
     }
-
-
 
     @Override
     public float calculatePower(Location pos1, Location pos2) {

@@ -7,6 +7,8 @@ import java.util.UUID;
 public class SpeedAndCadenceMeasure extends Characteristic {
     public static final UUID CHARACTERISTIC_UUID = UUID.fromString("00002A5B-0000-1000-8000-00805F9B34FB");
 
+    private static final int MAX_SECONDS = 64; //0xFFFF / 1024
+
     private int wheelRevolutions;
     private float wheelRevolutionsEventTime;
 
@@ -46,31 +48,23 @@ public class SpeedAndCadenceMeasure extends Characteristic {
     }
 
     public float getRpm(SpeedAndCadenceMeasure csc) {
-        float rpm;
-        if (this.wheelRevolutionsEventTime < csc.wheelRevolutionsEventTime) {
-            rpm = csc.getRpm(this);
+        float dt = this.wheelRevolutionsEventTime - csc.wheelRevolutionsEventTime;
+        if (csc.wheelRevolutionsEventTime  > this.wheelRevolutionsEventTime) {
+            dt += MAX_SECONDS;
         }
-        else {
-            float dt = this.wheelRevolutionsEventTime - csc.wheelRevolutionsEventTime;
-            float dr = this.wheelRevolutions - csc.wheelRevolutions;
+        float dr = this.wheelRevolutions - csc.wheelRevolutions;
 
-            rpm = dr / dt * 60;
-        }
-        return rpm;
+        return dr / dt * 60;
     }
 
     public float getCadence(SpeedAndCadenceMeasure csc) {
-        float cadence;
-        if (this.wheelRevolutionsEventTime < csc.wheelRevolutionsEventTime) {
-            cadence = csc.getCadence(this);
+        float dt = this.crankRevolutionsEventTime - csc.crankRevolutionsEventTime;
+        if (csc.crankRevolutionsEventTime  > this.crankRevolutionsEventTime) {
+            dt += MAX_SECONDS;
         }
-        else {
-            float dt = this.crankRevolutionsEventTime - csc.crankRevolutionsEventTime;
-            float dr = this.crankRevolutions - csc.crankRevolutions;
+        float dr = this.crankRevolutions - csc.crankRevolutions;
 
-            cadence = dr / dt;
-        }
-        return cadence;
+        return dr / dt * 60;
     }
 
     @Override

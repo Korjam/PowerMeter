@@ -4,6 +4,7 @@ package com.kinwatt.powermeter.ui.fragments.steps;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ public class QuestionTextFragment extends Fragment implements Step {
     public QuestionTextFragment() {
     }
 
-    public static QuestionTextFragment newInstance(int question) {
+    public static QuestionTextFragment newInstance(@StringRes int question) {
         QuestionTextFragment fragment = new QuestionTextFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_QUESTION, question);

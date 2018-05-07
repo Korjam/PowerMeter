@@ -3,6 +3,7 @@ package com.kinwatt.powermeter.ui.fragments.steps;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ public class QuestionCheckboxFragment extends Fragment implements Step {
     public QuestionCheckboxFragment() {
     }
 
-    public static QuestionCheckboxFragment newInstance(int question, int[] values) {
+    public static QuestionCheckboxFragment newInstance(@StringRes int question, @StringRes int... values) {
         QuestionCheckboxFragment fragment = new QuestionCheckboxFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_QUESTION, question);

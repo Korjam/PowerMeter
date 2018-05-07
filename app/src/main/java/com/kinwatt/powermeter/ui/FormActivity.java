@@ -43,35 +43,25 @@ public class FormActivity extends AppCompatActivity {
                 case 0:
                     return QuestionNumberFragment.newInstance(R.string.question_kilometers);
                 case 1:
-                    return getStepBikeType();
+                    return QuestionCheckboxFragment.newInstance(R.string.question_cycling,
+                            R.string.mountain,
+                            R.string.road,
+                            R.string.roller,
+                            R.string.velodrome,
+                            R.string.spinning);
                 case 2:
                     return new QuestionPowerMeterFragment();
                 case 3:
-                    return getFeaturesStep();
+                    return QuestionCheckboxFragment.newInstance(R.string.question_features,
+                            R.string.q_roller,
+                            R.string.q_aerodynamics,
+                            R.string.q_strava,
+                            R.string.q_videogames);
                 case 4:
                     return QuestionTextFragment.newInstance(R.string.question_suggestions);
             }
 
             throw new RuntimeException();
-        }
-
-        private Step getStepBikeType() {
-            int[] arr = new int[5];
-            arr[0] = R.string.mountain;
-            arr[1] = R.string.road;
-            arr[2] = R.string.roller;
-            arr[3] = R.string.velodrome;
-            arr[4] = R.string.spinning;
-            return QuestionCheckboxFragment.newInstance(R.string.question_cycling, arr);
-        }
-
-        private Step getFeaturesStep() {
-            int[] arr = new int[4];
-            arr[0] = R.string.q_roller;
-            arr[1] = R.string.q_aerodynamics;
-            arr[2] = R.string.q_strava;
-            arr[3] = R.string.q_videogames;
-            return QuestionCheckboxFragment.newInstance(R.string.question_features, arr);
         }
 
         @Override

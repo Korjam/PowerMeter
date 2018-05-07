@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+    <!ENTITY appname "Kinwatt">
+    ]>
 <resources>
 
     <string name="altitude">Altitud (m)</string>
@@ -15,11 +18,14 @@
 
     <string name="devices">Dispositivos</string>
     <string name="distance">Distancia (m)</string>
+    <string name="dont_show">No volver a mostrar</string>
     <string name="duration">Duración</string>
 
     <string name="error_field_required">Este campo es obligatorio</string>
     <string name="error_invalid_name">El nombre solo puede contener letras</string>
 
+    <string name="feedback_title">Ayúdanos a mejorar &appname;</string>
+    <string name="feedback_message">En &appname; tu opinión es importante.\n\nAyúdanos a mejorar &appname; rellenando un cuestionario anónimo sobre tus hábitos de ciclismo, no te llevará mas de 2 minutos.</string>
     <string name="finish">Finalizar</string>
 
     <string name="height">Estatura (cm)</string>
@@ -42,18 +48,20 @@
     <string name="question_cycling">¿Cómo haces ciclismo?</string>
     <string name="question_kilometers">¿Cuántos kilómetros recorres al año?</string>
     <string name="question_powermeter">¿Utilizas potenciómetro?</string>
+    <string name="question_features">¿Qué te gustaría ver en la aplicación?</string>
     <string name="question_suggestions">Sugerencias</string>
 
     <string name="q_price">Precio elevado</string>
     <string name="q_data">No me interesa la potencia</string>
     <string name="q_installation">La instalación es difícil</string>
-    <string name="q_other">Otros...</string>
+    <string name="q_other">Otros&#8230;</string>
 
     <string name="q_roller">Potencia en cualquier rodillo</string>
     <string name="q_aerodynamics">Medición aerodinámica (postura)</string>
     <string name="q_strava">Segmentos en vivo de Strava</string>
     <string name="q_videogames">Jugar a videojuegos con el rodillo</string>
 
+    <string name="remind_later">Más tarde</string>
     <string name="road">Carretera</string>
     <string name="roller">Rodillo</string>
 

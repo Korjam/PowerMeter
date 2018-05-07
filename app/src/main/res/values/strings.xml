@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+    <!ENTITY appname "Kinwatt">
+    ]>
 <resources>
-    <string name="app_name" translatable="false">Kinwatt</string>
+    <string name="app_name" translatable="false">&appname;</string>
     <string name="altitude">Altitude (m)</string>
     <string name="age">Age</string>
 
@@ -15,11 +18,14 @@
 
     <string name="devices">Devices</string>
     <string name="distance">Distance (m)</string>
+    <string name="dont_show">Don\'t show again</string>
     <string name="duration">Duration</string>
 
     <string name="error_field_required">This field is requiered</string>
     <string name="error_invalid_name">Name only can contains letters</string>
 
+    <string name="feedback_title">Help us make &appname; better</string>
+    <string name="feedback_message">Your opinion is important at &appname;.\n\nHelp us make &appname; better filling an anonymous form about your cycling habits, it won't take more than 2 minutes.</string>
     <string name="finish">Finish</string>
 
     <string name="height">Height</string>
@@ -42,18 +48,20 @@
     <string name="question_cycling">How do you do cycling?</string>
     <string name="question_kilometers">How many kilometers you travel by bike in a year?</string>
     <string name="question_powermeter">Do you use a powermeter?</string>
+    <string name="question_features">What would you like to see in the app?</string>
     <string name="question_suggestions">Suggestions</string>
 
     <string name="q_price">High price</string>
     <string name="q_data">I\'m not interest in power</string>
     <string name="q_installation">Installation difficult</string>
-    <string name="q_other">Others...</string>
+    <string name="q_other">Others&#8230;</string>
 
     <string name="q_roller">Power in any roller</string>
     <string name="q_aerodynamics">Aerodynamics measure (position)</string>
     <string name="q_strava">Strava live segments</string>
     <string name="q_videogames">Use of roller in videogames</string>
 
+    <string name="remind_later">Remind later</string>
     <string name="road">Road</string>
     <string name="roller">Roller</string>
 

@@ -24,6 +24,10 @@ public class FormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_form);
         mStepperLayout = findViewById(R.id.stepperLayout);
         mStepperLayout.setAdapter(new QuestionStepperAdapter(getSupportFragmentManager(), this));
+        int accentColor = getResources().getColor(R.color.colorAccent);
+        mStepperLayout.setBackButtonColor(accentColor);
+        mStepperLayout.setNextButtonColor(accentColor);
+        mStepperLayout.setCompleteButtonColor(accentColor);
     }
 
     public static class QuestionStepperAdapter extends AbstractFragmentStepAdapter {
@@ -37,14 +41,13 @@ public class FormActivity extends AppCompatActivity {
 
             switch (position) {
                 case 0:
-                    //return QuestionTextFragment.newInstance(R.string.question_suggestions);
                     return QuestionNumberFragment.newInstance(R.string.question_kilometers);
                 case 1:
                     return getStepBikeType();
                 case 2:
                     return new QuestionPowerMeterFragment();
                 case 3:
-                    return getStep();
+                    return getFeaturesStep();
                 case 4:
                     return QuestionTextFragment.newInstance(R.string.question_suggestions);
             }
@@ -62,13 +65,13 @@ public class FormActivity extends AppCompatActivity {
             return QuestionCheckboxFragment.newInstance(R.string.question_cycling, arr);
         }
 
-        private Step getStep() {
+        private Step getFeaturesStep() {
             int[] arr = new int[4];
             arr[0] = R.string.q_roller;
             arr[1] = R.string.q_aerodynamics;
             arr[2] = R.string.q_strava;
             arr[3] = R.string.q_videogames;
-            return QuestionCheckboxFragment.newInstance(R.string.question_kilometers, arr);
+            return QuestionCheckboxFragment.newInstance(R.string.question_features, arr);
         }
 
         @Override

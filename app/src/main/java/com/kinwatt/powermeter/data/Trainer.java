@@ -3,7 +3,6 @@ package com.kinwatt.powermeter.data;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Trainer {
 
     private String make;
@@ -56,6 +55,14 @@ public class Trainer {
 
     public void calibrateTrainer(List<Float> speed, List<Integer> power){
 
+        //Copy speed (in m/s) and power in new lists (we are going to remove some data from them)
+        List<Float> speedCopy = new ArrayList<>();
+        List<Integer> powerCopy = new ArrayList<>();
+        for (int i = 0; i < power.size(); i++ ){
+            speedCopy.add(speed.get(i) / 3.6f);
+            powerCopy.add(power.get(i));
+        }
+
         //remove pairs (speed,power) in which power=0
         for (int i = power.size() - 1; i >= 0; i--) {
             if (power.get(i) == 0) {
@@ -64,7 +71,7 @@ public class Trainer {
             }
         }
 
-        //Speed from kmh to ms and define speed3 as speed^3
+        //Speed from kmh to m/s and define speed3 as speed^3
         List<Float> speed3 = new ArrayList<>();
         for (int i=0; i < speed.size(); i++){
             speed.set(i, speed.get(i) / 3.6f);
@@ -106,17 +113,59 @@ public class Trainer {
             }
         }
 
+        //Obtaining Crr and CdA finally.
         double Crr = 0, CdA = 0;
         for (int i = 0; i < speed.size(); i++){
             Crr += pseudoinverse[0][i] * power.get(i);
             CdA += pseudoinverse[1][i] * power.get(i);
         }
 
+        //Calculate estimates of kinMass for suitable candidates
+        List<Double> kinMass = new ArrayList<Double>();
+        for (int i=1; i < powerCopy.size(); i++){
+            if (powerCopy.get(i) == 0 && powerCopy.get(i-1) == 0 && speedCopy.get(i) > 0 && speedCopy.get(i).intValue() != speedCopy.get(i-1).intValue()){
+                double mass = (Crr * speedCopy.get(i)+CdA * Math.pow(speedCopy.get(i),3))/(Math.pow(speedCopy.get(i-1),2) - Math.pow(speedCopy.get(i),2));
+                kinMass.add(mass);
+            }
+        }
+
+        //Remove kinMass elements i such that kinMass(i)<0
+        for (int i = kinMass.size() - 1; i >= 0; i--) {
+            if (kinMass.get(i) < 0) {
+                kinMass.remove(i);
+            }
+        }
+
+        //Calculate mean of kinMass
+        double meanKinMass = 0;
+        for (int i = 0; i < kinMass.size(); i++){
+            meanKinMass += kinMass.get(i);
+        }
+        meanKinMass = meanKinMass / kinMass.size();
+
+        //Calculate standard deviation
+        double stdKinMass;
+        double sum = 0;
+        for (int i = 0; i < kinMass.size(); i++){
+            sum += Math.pow(kinMass.get(i)-meanKinMass,2);
+        }
+        stdKinMass = Math.pow(sum/(kinMass.size()-1),0.5);
+
+        //Keep only values within 1 standard deviation
+        for (int i = kinMass.size() - 1; i >= 0; i--) {
+            if (kinMass.get(i) < meanKinMass + stdKinMass || meanKinMass -stdKinMass < kinMass.get(i)) {
+                kinMass.remove(i);
+            }
+        }
+
+        //Calculate mean again
+        meanKinMass = 0;
+        for (int i = 0; i < kinMass.size(); i++){
+            meanKinMass += kinMass.get(i);
+        }
+
         this.cRolling = Crr;
         this.CdA = CdA;
+        this.kinMass = meanKinMass;
     }
-
-
-
-
 }

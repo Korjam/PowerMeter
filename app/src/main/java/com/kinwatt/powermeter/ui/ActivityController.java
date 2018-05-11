@@ -9,6 +9,8 @@ import com.kinwatt.powermeter.R;
 import com.kinwatt.powermeter.common.AppSettings;
 import com.kinwatt.powermeter.common.MathUtils;
 import com.kinwatt.powermeter.data.Record;
+import com.kinwatt.powermeter.data.User;
+import com.kinwatt.powermeter.data.mappers.UserMapper;
 import com.kinwatt.powermeter.data.provider.RecordProvider;
 import com.kinwatt.powermeter.model.Buffer;
 import com.kinwatt.powermeter.model.CyclingOutdoorPowerAlgorithm;
@@ -16,6 +18,10 @@ import com.kinwatt.powermeter.model.PowerListener;
 import com.kinwatt.powermeter.model.PowerProvider;
 import com.kinwatt.powermeter.sensor.LocationListener;
 import com.kinwatt.powermeter.sensor.LocationProvider;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 
 public class ActivityController implements LocationListener, PowerListener {
 
@@ -33,6 +39,8 @@ public class ActivityController implements LocationListener, PowerListener {
 
     private RecordProvider recordProvider;
     private Record record;
+
+    private User user;
 
     private boolean running = false;
 
@@ -56,7 +64,14 @@ public class ActivityController implements LocationListener, PowerListener {
         }
         */
         powerProvider = new PowerProvider(context, locationProvider);
-        powerProvider.setPowerAlgorithm(new CyclingOutdoorPowerAlgorithm(null));
+
+        try {
+            user = UserMapper.load(new File(context.getFilesDir(), "user_data.json"));
+        } catch (IOException e) {
+            user = null;
+            e.printStackTrace();
+        }
+        powerProvider.setPowerAlgorithm(new CyclingOutdoorPowerAlgorithm(user));
 
         /*
         BluetoothManager bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
@@ -89,6 +104,7 @@ public class ActivityController implements LocationListener, PowerListener {
             powerProvider.reset();
             record = new Record();
             record.setName("Cycling outdoor");
+            record.setDate(new Date());
         }
     }
 

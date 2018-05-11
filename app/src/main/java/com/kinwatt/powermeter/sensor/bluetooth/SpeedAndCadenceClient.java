@@ -42,7 +42,7 @@ public class SpeedAndCadenceClient extends GattClientBase {
 
         SpeedAndCadenceMeasure currentMeasure = (SpeedAndCadenceMeasure)characteristic;
         if (lastMeasure != null) {
-            float rpm = lastMeasure.getRpm(currentMeasure);
+            float rpm = currentMeasure.getRpm(lastMeasure);
             if (Float.isNaN(rpm)) {
                 rpm = 0;
             }

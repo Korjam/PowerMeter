@@ -17,6 +17,7 @@ import com.kinwatt.powermeter.sensor.LocationProvider;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 public class ActivityController implements LocationListener, PowerListener {
 
@@ -83,6 +84,7 @@ public class ActivityController implements LocationListener, PowerListener {
             powerProvider.reset();
             record = new Record();
             record.setName("Cycling outdoor");
+            record.setDate(new Date());
         }
     }
 

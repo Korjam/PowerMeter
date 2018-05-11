@@ -17,6 +17,12 @@ public final class MathUtils {
         return (float) (res / items.length);
     }
 
+    public static double averageDouble(Collection<Double> items) {
+        double res = 0;
+        for (double item : items) res += item;
+        return res / items.size();
+    }
+
     public static double average(double... items) {
         double res = 0;
         for (double item : items) res += item / items.length;
@@ -120,5 +126,14 @@ public final class MathUtils {
         else {
             throw new RuntimeException("This exception never should be thrown.");
         }
+    }
+
+    public static double standardDeviation(Collection<Double> values) {
+        return Math.sqrt(variance(values));
+    }
+
+    public static double variance(Collection<Double> values) {
+        double average = MathUtils.averageDouble(values);
+        return Iterables.aggregate(values, 0.0, (acc, v) -> Math.pow(v - average, 2)) / (values.size() - 1);
     }
 }

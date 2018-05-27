@@ -44,7 +44,7 @@ public class ActivityController implements LocationListener, PowerListener {
 
         recordProvider = RecordProvider.getProvider(context);
 
-        locationProvider = LocationProvider.createProvider(context, LocationProvider.FUSED_PROVIDER);
+        locationProvider = LocationProvider.createProvider(context, LocationProvider.GPS_PROVIDER);
         /*
         // DEBUG PURPOSES
         locationProvider = LocationProvider.createProvider(context, LocationProvider.MOCK_PROVIDER);

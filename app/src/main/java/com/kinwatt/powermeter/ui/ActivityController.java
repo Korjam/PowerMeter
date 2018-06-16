@@ -116,9 +116,11 @@ public class ActivityController implements LocationListener, PowerListener {
 
             recordProvider.add(record);
 
+            /*
             if (!settings.isQuestionaryCompleted()) {
                 dialogBuilder.create().show();
             }
+            */
         }
     }
 

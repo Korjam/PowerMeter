@@ -49,6 +49,23 @@ public final class Iterables {
         return res;
     }
 
+    public static <T> boolean any(Iterable<T> list, Predicate<T> predicate) {
+        for (T item : list) {
+            if (predicate.apply(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static <T> boolean all(Iterable<T> list, Predicate<T> predicate) {
+        boolean res = true;
+        for (T item : list) {
+            res &= predicate.apply(item);
+        }
+        return res;
+    }
+
     public static <T> List<T> toList(Iterable<T> list) {
         ArrayList<T> res = new ArrayList<>();
         for (T item : list) {

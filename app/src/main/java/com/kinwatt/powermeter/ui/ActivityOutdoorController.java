@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-public class ActivityController implements LocationListener, PowerListener {
+public class ActivityOutdoorController implements LocationListener, PowerListener {
 
     private Context context;
     private AppSettings settings;
@@ -44,7 +44,7 @@ public class ActivityController implements LocationListener, PowerListener {
 
     private boolean running = false;
 
-    public ActivityController(Context context, ActivityView view) {
+    public ActivityOutdoorController(Context context, ActivityView view) {
         this.context = context;
         this.view = view;
 

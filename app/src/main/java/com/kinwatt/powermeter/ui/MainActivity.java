@@ -16,7 +16,7 @@ public class MainActivity extends ActivityBase implements ActivityView {
     private NumberView speed, altitude, distance;
     private ChronometerView duration;
 
-    private ActivityController controller;
+    private ActivityOutdoorController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class MainActivity extends ActivityBase implements ActivityView {
             buttonStart.setEnabled(true);
         });
 
-        controller = new ActivityController(this, this);
+        controller = new ActivityOutdoorController(this, this);
     }
 
     @Override

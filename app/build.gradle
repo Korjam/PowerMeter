@@ -6,8 +6,8 @@ android {
         applicationId "com.kinwatt.powermeter"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 6
-        versionName "1.0.0.006"
+        versionCode 7
+        versionName "0.0.0.0521"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

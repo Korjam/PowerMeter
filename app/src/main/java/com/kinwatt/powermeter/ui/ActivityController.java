@@ -1,8 +1,12 @@
 package com.kinwatt.powermeter.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
+import android.support.v7.app.AlertDialog;
 
+import com.kinwatt.powermeter.R;
+import com.kinwatt.powermeter.common.AppSettings;
 import com.kinwatt.powermeter.common.MathUtils;
 import com.kinwatt.powermeter.data.Record;
 import com.kinwatt.powermeter.data.User;
@@ -22,7 +26,9 @@ import java.util.Date;
 public class ActivityController implements LocationListener, PowerListener {
 
     private Context context;
+    private AppSettings settings;
     private ActivityView view;
+    private AlertDialog.Builder dialogBuilder;
 
     private LocationProvider locationProvider;
     private Location lastLocation;
@@ -41,6 +47,8 @@ public class ActivityController implements LocationListener, PowerListener {
     public ActivityController(Context context, ActivityView view) {
         this.context = context;
         this.view = view;
+
+        settings = AppSettings.getAppSettings(context);
 
         recordProvider = RecordProvider.getProvider(context);
 
@@ -75,6 +83,18 @@ public class ActivityController implements LocationListener, PowerListener {
 
         locationProvider.addListener(this);
         powerProvider.addListener(this);
+
+        //Setup dialog
+        dialogBuilder = new AlertDialog.Builder(this.context)
+                .setTitle(R.string.feedback_title)
+                .setMessage(R.string.feedback_message)
+                .setPositiveButton(R.string.yes, (dialog, whick) -> {
+                    Intent intent = new Intent(this.context, FormActivity.class);
+                    this.context.startActivity(intent);
+                })
+                .setNegativeButton(R.string.no, (dialog, which) ->
+                    settings.setQuestionaryCompleted(true))
+                .setNeutralButton(R.string.remind_later, (dialog, which) -> {});
     }
 
     public void start() {
@@ -95,6 +115,12 @@ public class ActivityController implements LocationListener, PowerListener {
             powerProvider.reset();
 
             recordProvider.add(record);
+
+            /*
+            if (!settings.isQuestionaryCompleted()) {
+                dialogBuilder.create().show();
+            }
+            */
         }
     }
 

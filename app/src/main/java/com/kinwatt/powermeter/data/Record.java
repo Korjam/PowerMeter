@@ -2,6 +2,8 @@ package com.kinwatt.powermeter.data;
 
 import android.location.Location;
 
+import com.kinwatt.powermeter.common.MathUtils;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,5 +59,16 @@ public class Record {
         position.setTimestamp(location.getTime() - date.getTime());
         positions.add(position);
         return position;
+    }
+
+    public float getSpeed() {
+        List<Float> validValues = new ArrayList<>();
+        for (Position p : positions) {
+            if (p.getSpeed() != 0) {
+                validValues.add(p.getSpeed());
+            }
+        }
+
+        return MathUtils.average(validValues);
     }
 }

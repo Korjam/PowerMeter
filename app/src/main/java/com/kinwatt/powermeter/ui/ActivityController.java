@@ -1,28 +1,34 @@
 package com.kinwatt.powermeter.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
+import android.support.v7.app.AlertDialog;
 
+import com.kinwatt.powermeter.R;
+import com.kinwatt.powermeter.common.AppSettings;
 import com.kinwatt.powermeter.common.MathUtils;
-import com.kinwatt.powermeter.model.Buffer;
 import com.kinwatt.powermeter.data.Record;
-import com.kinwatt.powermeter.data.mappers.RecordMapper;
+import com.kinwatt.powermeter.data.User;
+import com.kinwatt.powermeter.data.mappers.UserMapper;
+import com.kinwatt.powermeter.data.provider.RecordProvider;
+import com.kinwatt.powermeter.model.Buffer;
 import com.kinwatt.powermeter.model.CyclingOutdoorPowerAlgorithm;
-import com.kinwatt.powermeter.sensor.LocationListener;
-import com.kinwatt.powermeter.sensor.LocationProvider;
 import com.kinwatt.powermeter.model.PowerListener;
 import com.kinwatt.powermeter.model.PowerProvider;
+import com.kinwatt.powermeter.sensor.LocationListener;
+import com.kinwatt.powermeter.sensor.LocationProvider;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ActivityController implements LocationListener, PowerListener {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss");
-
     private Context context;
+    private AppSettings settings;
     private ActivityView view;
+    private AlertDialog.Builder dialogBuilder;
 
     private LocationProvider locationProvider;
     private Location lastLocation;
@@ -31,7 +37,10 @@ public class ActivityController implements LocationListener, PowerListener {
     private PowerProvider powerProvider;
     private Buffer<Float> powers = new Buffer<>(10);
 
+    private RecordProvider recordProvider;
     private Record record;
+
+    private User user;
 
     private boolean running = false;
 
@@ -39,7 +48,11 @@ public class ActivityController implements LocationListener, PowerListener {
         this.context = context;
         this.view = view;
 
-        locationProvider = LocationProvider.createProvider(context, LocationProvider.FUSED_PROVIDER);
+        settings = AppSettings.getAppSettings(context);
+
+        recordProvider = RecordProvider.getProvider(context);
+
+        locationProvider = LocationProvider.createProvider(context, LocationProvider.GPS_PROVIDER);
         /*
         // DEBUG PURPOSES
         locationProvider = LocationProvider.createProvider(context, LocationProvider.MOCK_PROVIDER);
@@ -51,7 +64,14 @@ public class ActivityController implements LocationListener, PowerListener {
         }
         */
         powerProvider = new PowerProvider(context, locationProvider);
-        powerProvider.setPowerAlgorithm(new CyclingOutdoorPowerAlgorithm(null));
+
+        try {
+            user = UserMapper.load(new File(context.getFilesDir(), "user_data.json"));
+        } catch (IOException e) {
+            user = null;
+            e.printStackTrace();
+        }
+        powerProvider.setPowerAlgorithm(new CyclingOutdoorPowerAlgorithm(user));
 
         /*
         BluetoothManager bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
@@ -63,6 +83,18 @@ public class ActivityController implements LocationListener, PowerListener {
 
         locationProvider.addListener(this);
         powerProvider.addListener(this);
+
+        //Setup dialog
+        dialogBuilder = new AlertDialog.Builder(this.context)
+                .setTitle(R.string.feedback_title)
+                .setMessage(R.string.feedback_message)
+                .setPositiveButton(R.string.yes, (dialog, whick) -> {
+                    Intent intent = new Intent(this.context, FormActivity.class);
+                    this.context.startActivity(intent);
+                })
+                .setNegativeButton(R.string.no, (dialog, which) ->
+                    settings.setQuestionaryCompleted(true))
+                .setNeutralButton(R.string.remind_later, (dialog, which) -> {});
     }
 
     public void start() {
@@ -72,6 +104,7 @@ public class ActivityController implements LocationListener, PowerListener {
             powerProvider.reset();
             record = new Record();
             record.setName("Cycling outdoor");
+            record.setDate(new Date());
         }
     }
 
@@ -81,11 +114,13 @@ public class ActivityController implements LocationListener, PowerListener {
             locationProvider.stop();
             powerProvider.reset();
 
-            try {
-                saveRecord(record);
-            } catch (IOException e) {
-                throw new RuntimeException(e.getMessage(), e);
+            recordProvider.add(record);
+
+            /*
+            if (!settings.isQuestionaryCompleted()) {
+                dialogBuilder.create().show();
             }
+            */
         }
     }
 
@@ -118,13 +153,5 @@ public class ActivityController implements LocationListener, PowerListener {
                 }
             }
         }
-    }
-
-    private void saveRecord(Record record) throws IOException {
-        RecordMapper.save(record, getFile(record));
-    }
-
-    private File getFile(Record item) {
-        return new File(context.getFilesDir(), String.format("%s_%s.json", item.getName(), DATE_FORMAT.format(item.getDate())));
     }
 }

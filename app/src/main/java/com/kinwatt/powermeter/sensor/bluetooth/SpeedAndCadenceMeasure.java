@@ -7,6 +7,8 @@ import java.util.UUID;
 public class SpeedAndCadenceMeasure extends Characteristic {
     public static final UUID CHARACTERISTIC_UUID = UUID.fromString("00002A5B-0000-1000-8000-00805F9B34FB");
 
+    private static final int MAX_SECONDS = 64; //0xFFFF / 1024
+
     private int wheelRevolutions;
     private float wheelRevolutionsEventTime;
 
@@ -47,16 +49,22 @@ public class SpeedAndCadenceMeasure extends Characteristic {
 
     public float getRpm(SpeedAndCadenceMeasure csc) {
         float dt = this.wheelRevolutionsEventTime - csc.wheelRevolutionsEventTime;
+        if (csc.wheelRevolutionsEventTime  > this.wheelRevolutionsEventTime) {
+            dt += MAX_SECONDS;
+        }
         float dr = this.wheelRevolutions - csc.wheelRevolutions;
 
-        return Math.abs(dr / dt * 60);
+        return dr / dt * 60;
     }
 
     public float getCadence(SpeedAndCadenceMeasure csc) {
         float dt = this.crankRevolutionsEventTime - csc.crankRevolutionsEventTime;
+        if (csc.crankRevolutionsEventTime  > this.crankRevolutionsEventTime) {
+            dt += MAX_SECONDS;
+        }
         float dr = this.crankRevolutions - csc.crankRevolutions;
 
-        return Math.abs(dr / dt);
+        return dr / dt * 60;
     }
 
     @Override

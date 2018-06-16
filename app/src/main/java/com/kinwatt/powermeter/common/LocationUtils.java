@@ -3,11 +3,14 @@ package com.kinwatt.powermeter.common;
 import android.location.Location;
 
 import com.kinwatt.powermeter.data.Position;
+import com.kinwatt.powermeter.data.Record;
+import com.kinwatt.powermeter.model.CyclingOutdoorPowerAlgorithm;
 
 import java.util.List;
 
 public class LocationUtils {
 
+    private static final int INTERPOLATION_STEP = 1000; // 1s
     private static final float ALTITUDE_ERROR = 10;
 
     public static Position interpolate(Position p1, Position p2, long v) {
@@ -100,6 +103,53 @@ public class LocationUtils {
             res.setTime(v);
             return res;
         };
+    }
+
+    public static Record interpolate(Record record) {
+        return interpolate(record, INTERPOLATION_STEP);
+    }
+
+    public static Record interpolate(Record record, int interpolationStep) {
+        Record res = new Record();
+        res.setName(record.getName());
+        res.setDate(record.getDate());
+        res.getPositions().add(record.getPositions().get(0));
+
+        for (int i = 0; i < record.getPositions().size() - 1; i++) {
+            interpolatePositions(res, record.getPositions().get(i), record.getPositions().get(i + 1), interpolationStep);
+        }
+
+        return res;
+    }
+
+    private static void interpolatePositions(Record record, Position p1,  Position p2, int interpolationStep) {
+        Function<Long, Position> interpolation = LocationUtils.interpolate(p1, p2);
+
+        long start = record.getLastPosition().getTimestamp() + interpolationStep;
+        long end = p2.getTimestamp() + (interpolationStep - p2.getTimestamp() % interpolationStep);
+
+        for (long i = start; i <= end; i += interpolationStep) {
+            Position lastPosition = record.getLastPosition();
+            Position interpolatedPosition = interpolation.apply(i);
+
+            //TODO: Calculate degrees from 5s ago;
+            /*
+            if (record.getPositions().size() >= 5) {
+                Position target = buffer.peek(4);
+                float hDiff = interpolatedPosition.getAltitude() - target.getAltitude();
+                float grade = hDiff / target.getDistance(interpolatedPosition);
+
+                interpolatedPosition.setPower(CyclingOutdoorPower.calculatePower(lastPosition, interpolatedPosition, grade));
+            }
+            else {
+                interpolatedPosition.setPower(CyclingOutdoorPower.calculatePower(lastPosition, interpolatedPosition));
+            }
+            */
+
+            interpolatedPosition.setPower(new CyclingOutdoorPowerAlgorithm(null).calculatePower(Position.convert(lastPosition), Position.convert(interpolatedPosition)));
+
+            record.getPositions().add(interpolatedPosition);
+        }
     }
 
     public static void normalize(List<Position> positions) {

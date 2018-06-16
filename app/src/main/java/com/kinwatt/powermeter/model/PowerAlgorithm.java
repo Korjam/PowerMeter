@@ -2,7 +2,6 @@ package com.kinwatt.powermeter.model;
 
 import android.location.Location;
 
-import com.kinwatt.powermeter.common.MathUtils;
 import com.kinwatt.powermeter.data.User;
 
 public abstract class PowerAlgorithm {

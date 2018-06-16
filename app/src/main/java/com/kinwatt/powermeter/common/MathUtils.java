@@ -58,7 +58,7 @@ public final class MathUtils {
         double _x2 = x2.doubleValue();
         double _y2 = y2.doubleValue();
 
-        if (_x1 >= _x2) throw new IllegalArgumentException();
+        if (_x1 >= _x2) throw new IllegalArgumentException(String.format("'%s' cannot be greater than '%s'."));
 
         final double m = (_y2 - _y1) / (_x2 - _x1);
         final double n = _y1 - m * _x1;
@@ -88,7 +88,7 @@ public final class MathUtils {
         double _x2 = x2.doubleValue();
         double _y2 = y2.doubleValue();
 
-        if (_x1 >= _x2) throw new IllegalArgumentException();
+        if (_x1 >= _x2) throw new IllegalArgumentException(String.format("'%s' cannot be greater than '%s'."));
 
         final double m = (_y2 - _y1) / (_x2 - _x1);
         final double n = _y1 - m * _x1;

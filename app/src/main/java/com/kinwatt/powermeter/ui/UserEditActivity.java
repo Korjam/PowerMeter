@@ -66,9 +66,8 @@ public class UserEditActivity extends AppCompatActivity {
     }
 
     private void goToMain() {
-        Intent intent = new Intent(UserEditActivity.this, MainActivity.class);
+        Intent intent = new Intent(UserEditActivity.this, RecordListActivity.class);
         startActivity(intent);
-        finish();
     }
 
     private boolean validateData() {

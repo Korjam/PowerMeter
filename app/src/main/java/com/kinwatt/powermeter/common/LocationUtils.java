@@ -146,7 +146,7 @@ public class LocationUtils {
             }
             */
 
-            interpolatedPosition.setPower(new CyclingOutdoorPowerAlgorithm(null).calculatePower(Position.convert(lastPosition), Position.convert(interpolatedPosition)));
+            interpolatedPosition.setPower(new CyclingOutdoorPowerAlgorithm(null).calculatePower(Position.Companion.convert(lastPosition), Position.Companion.convert(interpolatedPosition)));
 
             record.getPositions().add(interpolatedPosition);
         }

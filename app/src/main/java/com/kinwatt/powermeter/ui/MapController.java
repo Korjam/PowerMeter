@@ -114,7 +114,7 @@ public class MapController implements SpeedListener {
                 float speed = MapController.this.speed;
                 p1.setSpeed(lastSpeed);
                 p2.setSpeed(speed);
-                float power = indoor.calculatePower(Position.convert(p1), Position.convert(p2));
+                float power = indoor.calculatePower(Position.Companion.convert(p1), Position.Companion.convert(p2));
 
                 speedOutdoor = outdoor.calculateSpeed(power, speedOutdoor, getGrade(p1, p2));
 
@@ -166,7 +166,7 @@ public class MapController implements SpeedListener {
 
     private static double getGrade(Position p1, Position p2){
         double hDiff = p2.getAltitude() - p1.getAltitude();
-        return hDiff / p2.getDistance(p1);
+        return hDiff / p2.distanceTo(p1);
     }
 
     private static List<Float> getDistances(Record track) {
@@ -183,7 +183,7 @@ public class MapController implements SpeedListener {
         for (int i = 1; i < positions.size(); i++) {
             Position p1 = positions.get(i - 1);
             Position p2 = positions.get(i);
-            distance += p1.getDistance(p2);
+            distance += p1.distanceTo(p2);
             res.add(distance);
         }
 

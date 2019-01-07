@@ -45,7 +45,7 @@ public class Record {
         for (int i = 0; i < positions.size() - 1; i++) {
             Position p1 = positions.get(i);
             Position p2 = positions.get(i + 1);
-            distance += p1.getDistance(p2);
+            distance += p1.distanceTo(p2);
         }
         return distance;
     }

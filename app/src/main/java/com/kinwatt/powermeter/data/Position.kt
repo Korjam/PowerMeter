@@ -4,11 +4,11 @@ import android.location.Location
 
 import kotlin.math.*
 
-class Position @JvmOverloads constructor(var latitude: Float, var longitude: Float, var altitude: Float = 0f,
+class Position @JvmOverloads constructor(var latitude: Double, var longitude: Double, var altitude: Double = 0.0,
                                          var speed: Float = 0f, var timestamp: Long = 0, var power: Float = 0f) : Cloneable {
 
     fun distanceTo(position: Position): Float {
-        val meanLat = floatArrayOf(this.latitude, position.latitude).average()
+        val meanLat = doubleArrayOf(this.latitude, position.latitude).average()
         val dLat = (position.latitude - this.latitude) * geodesica_u
         val dLon = (position.longitude - this.longitude) * sin(Math.toRadians(90 - meanLat)) * geodesica_u
         return sqrt(dLat.pow(2) + dLon.pow(2)).toFloat()
@@ -33,18 +33,20 @@ class Position @JvmOverloads constructor(var latitude: Float, var longitude: Flo
         private const val geodesica_u = geodesica / 360
 
         fun convert(location: Location) = Position(
-                location.latitude.toFloat(),
-                location.longitude.toFloat(),
-                location.altitude.toFloat(),
+                location.latitude,
+                location.longitude,
+                location.altitude,
                 location.speed)
 
         fun convert(position: Position): Location {
             val res = Location("NULL")
-            res.latitude = position.latitude.toDouble()
-            res.longitude = position.longitude.toDouble()
-            res.altitude = position.altitude.toDouble()
+            res.latitude = position.latitude
+            res.longitude = position.longitude
+            res.altitude = position.altitude
             res.speed = position.speed
             return res
         }
+
+
     }
 }

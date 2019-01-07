@@ -7,7 +7,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.kinwatt.powermeter.common.LocationUtils;
-import com.kinwatt.powermeter.common.MathUtils;
+import com.kinwatt.powermeter.common.mathUtils.MathUtilsKt;
 import com.kinwatt.powermeter.data.Position;
 import com.kinwatt.powermeter.data.Record;
 import com.kinwatt.powermeter.data.SensorData;
@@ -48,7 +48,7 @@ public class MapController implements SpeedListener {
 
         running = false;
 
-        indoor = new CyclingIndoorPowerAlgorithm(null);
+        indoor = new CyclingIndoorPowerAlgorithm();
         outdoor = new CyclingOutdoorPowerAlgorithm(null);
 
         BluetoothManager bluetoothManager = (BluetoothManager) activity.getSystemService(Context.BLUETOOTH_SERVICE);
@@ -126,11 +126,11 @@ public class MapController implements SpeedListener {
                 p1 = track.getPositions().get(index);
                 p2 = track.getPositions().get(index + 1);
 
-                long time = MathUtils.interpolate(
+                long time = MathUtilsKt.interpolate(
                         distances.get(index),     p1.getTimestamp(),
                         distances.get(index + 1), p2.getTimestamp(), distance);
 
-                Position current = LocationUtils.interpolate(p1, p2, time);
+                Position current = LocationUtils.INSTANCE.interpolate(p1, p2, time);
 
                 activity.runOnUiThread(() ->  {
                     activity.setSpeed(speedOutdoor * 3.6f);

@@ -1,12 +1,9 @@
 package com.kinwatt.powermeter.model
 
 import android.location.Location
-
-import com.kinwatt.powermeter.data.User
-
 import kotlin.math.pow
 
-class CyclingIndoorPowerAlgorithm(user: User?) : PowerAlgorithm {
+class CyclingIndoorPowerAlgorithm : PowerAlgorithm {
 
     override fun calculatePower(pos1: Location, pos2: Location): Float = calculatePower(pos1, pos2, 0.0)
 

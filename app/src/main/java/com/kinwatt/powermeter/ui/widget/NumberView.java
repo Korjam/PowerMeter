@@ -35,6 +35,9 @@ public class NumberView extends TextView {
         this.units = units;
     }
 
+    public double getValue() {
+        return value;
+    }
     public void setValue(double value) {
         this.value = value;
         if (units == null) {
@@ -44,14 +47,15 @@ public class NumberView extends TextView {
             setText(value != 0 ? String.format("%.2f %s", value, units) : "-- " + units);
         }
     }
+    /*
     public void setValue(long value) {
         this.value = value;
         if (units == null) {
             setText(value != 0 ? String.valueOf(value) : "--");
         }
         else {
-            //setText(value > 0 ? String.valueOf(value) : "--");
             setText(value != 0 ? String.format("%s %s", value, units) : "-- " + units);
         }
     }
+    */
 }

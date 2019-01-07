@@ -97,7 +97,7 @@ public class RecordProvider {
                 pathname.getName().startsWith(name) &&
                 pathname.getName().endsWith(extension))) {
             try {
-                FileUtils.copyFile(Environment.getExternalStorageDirectory().getAbsolutePath(), file.getName(), filesDir.getAbsolutePath());
+                FileUtils.INSTANCE.copyFile(Environment.getExternalStorageDirectory().getAbsolutePath(), file.getName(), filesDir.getAbsolutePath());
             } catch (IOException e) {
                 e.printStackTrace();
             }

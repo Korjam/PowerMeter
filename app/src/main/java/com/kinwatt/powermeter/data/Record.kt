@@ -5,13 +5,9 @@ import android.location.Location
 import java.util.ArrayList
 import java.util.Date
 
-class Record constructor(var name: String = "",
-                         var date: Date? = null) {
+class Record constructor(var name: String = "", var date: Date? = null) {
 
     val positions: ArrayList<Position> = ArrayList()
-
-    val lastPosition: Position?
-        get() = if (positions.isEmpty()) null else positions.last()
 
     val distance: Float
         get() {
@@ -25,15 +21,16 @@ class Record constructor(var name: String = "",
         }
 
     val speed: Float
-        get() = positions.asSequence().filter { it.speed != 0f }
-                .map { it.speed.toDouble() }
+        get() = positions.asSequence()
+                .filter { it.speed != 0f }
+                .map { it.speed }
                 .average().toFloat()
 
     fun addPosition(location: Location): Position {
         if (this.positions.isEmpty()) {
             this.date = Date(location.time)
         }
-        val position = Position(location.latitude.toFloat(), location.longitude.toFloat(), location.altitude.toFloat(),
+        val position = Position(location.latitude, location.longitude, location.altitude,
                 location.speed, location.time - date!!.time)
         positions.add(position)
         return position

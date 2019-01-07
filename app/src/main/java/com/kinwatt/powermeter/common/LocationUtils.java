@@ -110,9 +110,7 @@ public class LocationUtils {
     }
 
     public static Record interpolate(Record record, int interpolationStep) {
-        Record res = new Record();
-        res.setName(record.getName());
-        res.setDate(record.getDate());
+        Record res = new Record(record.getName(), record.getDate());
         res.getPositions().add(record.getPositions().get(0));
 
         for (int i = 0; i < record.getPositions().size() - 1; i++) {

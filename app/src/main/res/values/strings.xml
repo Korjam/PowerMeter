@@ -25,7 +25,7 @@
     <string name="error_invalid_name">Name only can contains letters</string>
 
     <string name="feedback_title">Help us make &appname; better</string>
-    <string name="feedback_message">Your opinion is important at &appname;.\n\nHelp us make &appname; better filling an anonymous form about your cycling habits, it won't take more than 2 minutes.</string>
+    <string name="feedback_message">Your opinion is important at &appname;.\n\nHelp us make &appname; better filling an anonymous form about your cycling habits, it won\'t take more than 2 minutes.</string>
     <string name="finish">Finish</string>
 
     <string name="height">Height</string>
@@ -83,6 +83,4 @@
 
     <string name="yes">Yes</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

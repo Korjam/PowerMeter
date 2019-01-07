@@ -58,7 +58,7 @@ public class MapController implements SpeedListener {
         }
 
         SensorProvider provider = SensorProvider.getProvider(activity);
-        SensorData data = provider.findSensor(SpeedAndCadenceClient.SERVICE_UUID);
+        SensorData data = provider.findSensor(SpeedAndCadenceClient.Companion.getSERVICE_UUID());
 
         if (data != null) {
             BluetoothDevice device = bluetoothAdapter.getRemoteDevice(data.getAddress());

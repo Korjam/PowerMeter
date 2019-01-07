@@ -110,7 +110,7 @@ public class ConnectDeviceDialogFragment extends DialogFragment {
     }
 
     public void startScan() {
-        startScan(SpeedAndCadenceClient.SERVICE_UUID);
+        startScan(SpeedAndCadenceClient.Companion.getSERVICE_UUID());
     }
 
     public void startScan(UUID serviceId) {

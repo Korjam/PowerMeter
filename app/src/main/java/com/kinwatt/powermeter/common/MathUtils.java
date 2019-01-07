@@ -11,18 +11,6 @@ public final class MathUtils {
         return (float) (res / items.size());
     }
 
-    public static float average(float... items) {
-        double res = 0;
-        for (float item : items) res += item;
-        return (float) (res / items.length);
-    }
-
-    public static double average(double... items) {
-        double res = 0;
-        for (double item : items) res += item / items.length;
-        return res;
-    }
-
     public static float angularVelocity(float rpm) {
         return (float)(2 * Math.PI * rpm / 60);
     }

@@ -2,16 +2,16 @@ package com.kinwatt.powermeter.data
 
 import android.location.Location
 
-import com.kinwatt.powermeter.common.MathUtils
+import kotlin.math.*
 
 class Position @JvmOverloads constructor(var latitude: Float, var longitude: Float, var altitude: Float = 0f,
                                          var speed: Float = 0f, var timestamp: Long = 0, var power: Float = 0f) : Cloneable {
 
     fun distanceTo(position: Position): Float {
-        val dLat = ((position.latitude - this.latitude) * geodesica_u).toDouble()
-        val meanLat = MathUtils.average(this.latitude, position.latitude).toDouble()
-        val dLon = (position.longitude - this.longitude).toDouble() * Math.sin(Math.toRadians(90 - meanLat)) * geodesica_u.toDouble()
-        return Math.sqrt(Math.pow(dLat, 2.0) + Math.pow(dLon, 2.0)).toFloat()
+        val meanLat = floatArrayOf(this.latitude, position.latitude).average()
+        val dLat = (position.latitude - this.latitude) * geodesica_u
+        val dLon = (position.longitude - this.longitude) * sin(Math.toRadians(90 - meanLat)) * geodesica_u
+        return sqrt(dLat.pow(2) + dLon.pow(2)).toFloat()
     }
 
     override fun equals(other: Any?) = if (other is Position) this.equals(other) else false
@@ -29,7 +29,7 @@ class Position @JvmOverloads constructor(var latitude: Float, var longitude: Flo
 
     companion object {
 
-        private const val geodesica = 40030000f
+        private const val geodesica = 40030000
         private const val geodesica_u = geodesica / 360
 
         fun convert(location: Location) = Position(

@@ -20,8 +20,10 @@ abstract class LocationProvider {
 
     private val mListeners: ArrayList<LocationListener> = ArrayList()
 
-    private var location1: Location? = null
-    private var location2: Location? = null
+    private var dispatching: Location? = null
+
+    private var locationAltitude1: Location? = null
+    private var locationAltitude2: Location? = null
 
     fun addListener(listener: LocationListener) {
         mListeners.add(listener)
@@ -35,54 +37,68 @@ abstract class LocationProvider {
     abstract fun stop()
 
     protected fun onLocationChanged(location: Location) {
-        if (location2 == null) {
-            onLocationChangedInternal(location)
+        if (dispatching == null) {
+            dispatching = location
         }
-        else if (location.time != location2!!.time) {
-            onLocationChangedInternal(location)
+        else if (location.time != dispatching!!.time) {
+            onLocationChangedInternal(dispatching!!)
         }
         else {
-            Logger.info("location skipped")
+            if (location.hasSpeed()){
+                dispatching!!.speed = location.speed
+            }
+            if (location.hasAltitude()){
+                dispatching!!.altitude = location.altitude
+            }
+            //Logger.info("location skipped. has speed? ${location.hasSpeed()}, has altitude? ${location.hasAltitude()}")
         }
     }
 
+    @Synchronized
     private fun onLocationChangedInternal(location: Location) {
-        Logger.info("Location changed. New time = ${location.time}")
+
+        Logger.info("Location changed. has speed? ${location.hasSpeed()}, has altitude? ${location.hasAltitude()}")
 
         if (!location.hasAltitude()) {
-            softenAltitude(location)
-        }
-        if (!location.hasSpeed()) {
-            softenSpeed(location)
+            if (locationAltitude2 != null){
+                location.altitude = locationAltitude2!!.altitude
+            }
+            //softenAltitude(location)
         }
 
         for (listener in mListeners) {
-            listener.onLocationChanged(location)
+            listener.onLocationChanged(Location(location))
         }
 
-        location1 = location2
-        location2 = location
+        if (location.hasAltitude()){
+            locationAltitude1 = locationAltitude2
+            locationAltitude2 = location
+        }
+
+        dispatching = null
     }
 
     private fun softenAltitude(location: Location) {
-        if (location1 != null && location2 != null) {
+        if (locationAltitude1 != null && locationAltitude2 != null) {
             val altitude = interpolation(
-                    location1!!.time, location1!!.altitude,
-                    location2!!.time, location2!!.altitude)
+                    locationAltitude1!!.time, locationAltitude1!!.altitude,
+                    locationAltitude2!!.time, locationAltitude2!!.altitude)
 
             Logger.warning("No altitude present, softening altitude")
             location.altitude = altitude(location.time)
-        }
-    }
 
-    private fun softenSpeed(location: Location) {
-        if (location1 != null && location2 != null) {
-            val speed = interpolation(
+            Logger.warning("New altitude = ${location.altitude}")
+
+            /*
+            if (!location.hasSpeed()) {
+                val speed = interpolation(
                     location1!!.time, location1!!.speed,
                     location2!!.time, location2!!.speed)
 
-            Logger.warning("No speed present, softening speed")
-            location.speed = speed(location.time)
+                Logger.warning("No speed present, softening speed")
+                location.speed = speed(location.time)
+            }
+            */
         }
     }
 

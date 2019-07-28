@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 26
+    buildToolsVersion "29.0.1"
     defaultConfig {
         applicationId "com.kinwatt.powermeter"
         minSdkVersion 21
@@ -31,6 +32,10 @@ android {
         // but continue the build even when errors are found:
         // abortOnError false
     }
+}
+
+androidExtensions {
+    experimental = true
 }
 
 dependencies {

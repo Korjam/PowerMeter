@@ -13,14 +13,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button_start"
+            android:id="@+id/buttonStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/start" />
 
         <Button
-            android:id="@+id/button_stop"
+            android:id="@+id/buttonStop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

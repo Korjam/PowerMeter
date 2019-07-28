@@ -36,7 +36,7 @@ public class DeviceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_device_list, container, false);
 
-        provider = SensorProvider.getProvider(getActivity());
+        provider = SensorProvider.Companion.getProvider(getActivity());
         items = provider.getAll();
 
         RecyclerView recyclerView = (RecyclerView) view;

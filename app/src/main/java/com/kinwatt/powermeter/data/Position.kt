@@ -4,8 +4,9 @@ import android.location.Location
 
 import kotlin.math.*
 
-class Position @JvmOverloads constructor(var latitude: Double, var longitude: Double, var altitude: Double = 0.0,
-                                         var speed: Float = 0f, var timestamp: Long = 0, var power: Float = 0f) : Cloneable {
+class Position @JvmOverloads constructor(
+        var latitude: Double, var longitude: Double, var altitude: Double = 0.0,
+        var speed: Float = 0f, var timestamp: Long = 0, var power: Float = 0f) : Cloneable {
 
     fun distanceTo(position: Position): Float {
         val meanLat = doubleArrayOf(this.latitude, position.latitude).average()

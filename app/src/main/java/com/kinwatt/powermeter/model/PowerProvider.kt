@@ -38,7 +38,6 @@ class PowerProvider(var powerAlgorithm: PowerAlgorithm, private val locationProv
     override fun onLocationChanged(location: Location) {
         if (previousLocation == null) baseTime = location.time
 
-        val location = Location(location)
         location.time = location.time - baseTime
 
         if (previousLocation != null)

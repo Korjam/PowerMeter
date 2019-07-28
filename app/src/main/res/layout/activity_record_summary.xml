@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main_container"
+    android:id="@+id/scrollView"
     tools:context=".ui.activities.RecordSummaryActivity">
 
     <LinearLayout
@@ -105,7 +105,7 @@
         </LinearLayout>
 
         <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chart1"
+            android:id="@+id/lineChart"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginBottom="8dp"
@@ -116,7 +116,7 @@
             android:isScrollContainer="true" />
 
         <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chart2"
+            android:id="@+id/barChart"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginBottom="8dp"

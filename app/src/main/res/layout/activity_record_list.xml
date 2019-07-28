@@ -20,7 +20,7 @@
             tools:context=".ui.activities.DevicesActivity" />
 
         <TextView
-            android:id="@+id/no_records"
+            android:id="@+id/noRecords"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

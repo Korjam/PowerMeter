@@ -32,7 +32,7 @@ class ActivityOutdoorController(private val context: Context, private val view: 
     private val powers = ArrayDeque<Float>(10)
 
     private val recordProvider: RecordProvider
-    private var record: Record? = null
+    private var record: Record = Record()
 
     private var user: User? = null
 
@@ -81,8 +81,8 @@ class ActivityOutdoorController(private val context: Context, private val view: 
             locationProvider.start()
             powerProvider.reset()
             record = Record()
-            record!!.name = "Cycling outdoor"
-            record!!.date = Date()
+            record.name = "Cycling outdoor"
+            record.date = Date()
         }
     }
 
@@ -103,7 +103,7 @@ class ActivityOutdoorController(private val context: Context, private val view: 
     }
 
     override fun onLocationChanged(location: Location) {
-        record!!.addPosition(location)
+        record.addPosition(location)
 
         view.setSpeed(location.speed)
         view.setAltitude(location.altitude)

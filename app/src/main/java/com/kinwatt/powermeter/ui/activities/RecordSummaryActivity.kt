@@ -2,11 +2,13 @@ package com.kinwatt.powermeter.ui.activities
 
 import android.graphics.Color
 import android.graphics.DashPathEffect
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
@@ -15,31 +17,34 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+
 import com.kinwatt.powermeter.R
 import com.kinwatt.powermeter.common.LocationUtils
 import com.kinwatt.powermeter.data.Record
 import com.kinwatt.powermeter.data.mappers.RecordMapper
 import com.kinwatt.powermeter.ui.widget.NumberView
 import com.kinwatt.powermeter.ui.widget.WorkaroundMapFragment
+
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+
 import kotlin.math.max
 import kotlin.math.roundToInt
 
+import kotlinx.android.synthetic.main.activity_record_summary.*
+
 class RecordSummaryActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private var record: Record? = null
-
-    private var filename: String? = null
-
-    private var mScrollView: ScrollView? = null
+    private lateinit var record: Record
+    private lateinit var filename: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +53,6 @@ class RecordSummaryActivity : AppCompatActivity(), OnMapReadyCallback {
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
-
-        mScrollView = findViewById(R.id.main_container)
 
         durationFormat.timeZone = TimeZone.getTimeZone("GTM")
 
@@ -67,26 +70,26 @@ class RecordSummaryActivity : AppCompatActivity(), OnMapReadyCallback {
             e.printStackTrace()
         }
 
-        if (record == null || record!!.positions.lastOrNull() == null) {
+        if (record.positions.lastOrNull() == null) {
             Toast.makeText(applicationContext, "Invalid file. Deleting record...", Toast.LENGTH_LONG).show()
             onDelete()
             return
         }
 
-        supportActionBar!!.title = record!!.name
+        supportActionBar!!.title = record.name
 
-        LocationUtils.normalize(record!!.positions)
-        var interpolated = LocationUtils.interpolate(record!!)
+        LocationUtils.normalize(record.positions)
+        var interpolated = LocationUtils.interpolate(record)
 
-        distance.value = record!!.distance.toDouble() / 1000
-        duration.text = durationFormat.format(Date(record!!.positions.lastOrNull()!!.timestamp))
+        distance.value = record.distance.toDouble() / 1000
+        duration.text = durationFormat.format(Date(record.positions.lastOrNull()!!.timestamp))
         speed.value = interpolated.speed.toDouble() * 3.6
 
         val mMapFragment = supportFragmentManager.findFragmentById(R.id.map_container) as WorkaroundMapFragment
-        mMapFragment.setListener { mScrollView!!.requestDisallowInterceptTouchEvent(true) }
+        mMapFragment.setListener { scrollView.requestDisallowInterceptTouchEvent(true) }
         mMapFragment.getMapAsync(this)
 
-        populateSpeedChart(record!!)
+        populateSpeedChart(record)
         populatePowerChart(interpolated)
     }
 
@@ -133,10 +136,10 @@ class RecordSummaryActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val firstPosition = record!!.positions.first()
+        val firstPosition = record.positions.first()
         val initial = LatLng(firstPosition.latitude, firstPosition.longitude)
 
-        val lastPosition = record!!.positions.last()
+        val lastPosition = record.positions.last()
         val end = LatLng(lastPosition.latitude, lastPosition.longitude)
 
         googleMap.addMarker(MarkerOptions().position(initial).title("Start"))
@@ -205,8 +208,6 @@ class RecordSummaryActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun populateSpeedChart(record: Record) {
-        var lineChart = findViewById<LineChart>(R.id.chart1)!!
-
         lineChart.setDrawGridBackground(false)
         lineChart.isDragEnabled = true
         lineChart.setScaleEnabled(true)
@@ -244,7 +245,6 @@ class RecordSummaryActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun populatePowerChart(interpolated: Record) {
-        val barChart = findViewById<BarChart>(R.id.chart2)!!
 
         barChart.setDrawBarShadow(false)
         barChart.setDrawValueAboveBar(true)
@@ -290,7 +290,10 @@ class RecordSummaryActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val powerSet = BarDataSet(ArrayList(), resources.getString(R.string.instant_power))
         powerSet.setDrawIcons(false)
-        powerSet.color = resources.getColor(R.color.colorPrimary, theme)
+        powerSet.color = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            resources.getColor(R.color.colorPrimary, theme)
+        else
+            resources.getColor(R.color.colorPrimary)
 
         val dataSets = ArrayList<IBarDataSet>()
         dataSets.add(powerSet)

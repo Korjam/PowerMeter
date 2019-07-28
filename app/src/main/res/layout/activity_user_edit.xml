@@ -34,7 +34,7 @@
                 android:inputType="number">
 
                 <AutoCompleteTextView
-                    android:id="@+id/text_name"
+                    android:id="@+id/nameView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -48,7 +48,7 @@
                 android:layout_height="match_parent">
 
                 <EditText
-                    android:id="@+id/text_age"
+                    android:id="@+id/ageView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -70,7 +70,7 @@
                     android:layout_height="match_parent">
 
                     <EditText
-                        android:id="@+id/text_weight"
+                        android:id="@+id/weightView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -86,7 +86,7 @@
                     android:layout_height="match_parent">
 
                     <EditText
-                        android:id="@+id/text_height"
+                        android:id="@+id/heightView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -129,7 +129,7 @@
                 android:textSize="16sp" />
 
             <RadioGroup
-                android:id="@+id/radio_group_bike"
+                android:id="@+id/bikeTypeView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
@@ -156,7 +156,7 @@
                 android:layout_height="match_parent">
 
                 <EditText
-                    android:id="@+id/text_bike_weight"
+                    android:id="@+id/bikeWeightView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -168,7 +168,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button_continue"
+            android:id="@+id/continueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"

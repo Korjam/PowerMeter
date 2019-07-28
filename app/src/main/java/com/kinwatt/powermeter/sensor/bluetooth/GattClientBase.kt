@@ -24,18 +24,18 @@ abstract class GattClientBase(private val context: Context, private val device: 
 
         override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                Log.i(TAG, "BluetoothDevice CONNECTED: " + gatt.device.address + " " + gatt.device.name)
+                Logger.info("BluetoothDevice CONNECTED: " + gatt.device.address + " " + gatt.device.name)
                 gatt.discoverServices()
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                Log.i(TAG, "BluetoothDevice DISCONNECTED")
+                Logger.info("BluetoothDevice DISCONNECTED")
                 if (status == 133) {
-                    Log.i(TAG, "Many connections")
+                    Logger.info("Many connections")
                 }
             }
         }
 
         override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
-            Log.i(TAG, "Services discovered")
+            Logger.info("Services discovered")
 
             service = gatt.getService(serviceUuid)
 
@@ -63,9 +63,9 @@ abstract class GattClientBase(private val context: Context, private val device: 
         gatt = device.connectGatt(context, false, callback)
 
         if (gatt == null) {
-            Log.i(TAG, "Unable to connect GATT server")
+            Logger.info("Unable to connect GATT server")
         } else {
-            Log.i(TAG, "Trying to connect GATT server")
+            Logger.info("Trying to connect GATT server")
         }
     }
 
@@ -104,7 +104,7 @@ abstract class GattClientBase(private val context: Context, private val device: 
     }
 
     companion object {
-        private val TAG = GattClientBase::class.java.simpleName
+        protected val Logger = java.util.logging.Logger.getLogger(GattClientBase::class.java.simpleName)!!
 
         private val CLIENT_CHARACTERISTIC_CONFIG = UUID.fromString("00002902-0000-1000-8000-00805F9B34FB")
         private val SERVER_CHARACTERISTIC_CONFIG = UUID.fromString("00002903-0000-1000-8000-00805F9B34FB")

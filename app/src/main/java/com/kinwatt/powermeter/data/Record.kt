@@ -5,7 +5,7 @@ import android.location.Location
 import java.util.ArrayList
 import java.util.Date
 
-class Record constructor(var name: String = "", var date: Date? = null) {
+class Record constructor(var name: String = "", var date: Date = Date()) {
 
     val positions: ArrayList<Position> = ArrayList()
 
@@ -31,7 +31,7 @@ class Record constructor(var name: String = "", var date: Date? = null) {
             this.date = Date(location.time)
         }
         val position = Position(location.latitude, location.longitude, location.altitude,
-                location.speed, location.time - date!!.time)
+                location.speed, location.time - date.time)
         positions.add(position)
         return position
     }

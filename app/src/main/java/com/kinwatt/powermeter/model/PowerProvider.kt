@@ -1,10 +1,8 @@
 package com.kinwatt.powermeter.model
 
-import android.content.Context
 import android.location.Location
 
 import com.kinwatt.powermeter.common.LocationUtils
-import com.kinwatt.powermeter.common.mathUtils.*
 import com.kinwatt.powermeter.sensor.LocationListener
 import com.kinwatt.powermeter.sensor.LocationProvider
 import java.util.*
@@ -12,8 +10,7 @@ import java.util.*
 class PowerProvider(var powerAlgorithm: PowerAlgorithm, private val locationProvider: LocationProvider) : LocationListener {
 
     private var baseTime: Long = 0
-    private var location1: Location? = null
-    private var location2: Location? = null
+    private var previousLocation: Location? = null
     private val buffer = ArrayDeque<Location>(10)
 
     protected var listeners: MutableList<PowerListener> = ArrayList()
@@ -33,29 +30,23 @@ class PowerProvider(var powerAlgorithm: PowerAlgorithm, private val locationProv
     }
 
     fun reset() {
-        location1 = null
-        location2 = null
+        previousLocation = null
         baseTime = 0
         buffer.clear()
     }
 
     override fun onLocationChanged(location: Location) {
-        if (location2 == null) baseTime = location.time
+        if (previousLocation == null) baseTime = location.time
 
         val location = Location(location)
         location.time = location.time - baseTime
 
-        if (location.altitude == 0.0 && location1 != null && location2 != null) {
-            softenAltitude(location)
-        }
-
-        if (location2 != null)
+        if (previousLocation != null)
             interpolatePositions(location)
         else
             buffer.add(location)
 
-        location1 = location2
-        location2 = location
+        previousLocation = location
     }
 
     protected fun onPowerCalculated(time: Long, power: Float) {
@@ -64,23 +55,8 @@ class PowerProvider(var powerAlgorithm: PowerAlgorithm, private val locationProv
         }
     }
 
-    private fun softenAltitude(position: Location) {
-        val altitude = interpolation(
-                location1!!.time, location1!!.altitude,
-                location2!!.time, location2!!.altitude)
-
-        position.altitude = altitude(position.time)
-
-        if (position.speed == 0f) {
-            val speed = interpolation(
-                    location1!!.time, location1!!.speed,
-                    location2!!.time, location2!!.speed)
-            position.speed = speed(position.time)
-        }
-    }
-
     private fun interpolatePositions(position: Location) {
-        val interpolation = LocationUtils.interpolate(location2!!, position)
+        val interpolation = LocationUtils.interpolate(previousLocation!!, position)
 
         val start = buffer.peekLast().time + INTERPOLATION_STEP
         val end = position.time + (INTERPOLATION_STEP - position.time % INTERPOLATION_STEP)
@@ -115,6 +91,7 @@ class PowerProvider(var powerAlgorithm: PowerAlgorithm, private val locationProv
     }
 
     companion object {
+        protected val Logger = java.util.logging.Logger.getLogger("PowerProvider")!!
 
         private const val INTERPOLATION_STEP = 1000L // 1s
 

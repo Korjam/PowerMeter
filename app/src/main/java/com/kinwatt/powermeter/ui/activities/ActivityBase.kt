@@ -1,5 +1,6 @@
 package com.kinwatt.powermeter.ui.activities
 
+import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -10,7 +11,10 @@ import com.kinwatt.powermeter.R
 open class ActivityBase : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+
         menuInflater.inflate(R.menu.main, menu)
+        val devicesItem = menu.findItem(R.id.devices_setting)
+        devicesItem.isVisible = BluetoothAdapter.getDefaultAdapter() != null
         return true
     }
 

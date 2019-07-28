@@ -40,14 +40,12 @@ abstract class LocationProvider {
         const val GPS_PROVIDER = 0
         const val NETWORK_PROVIDER = 1
         const val FUSED_PROVIDER = 2
-        const val MOCK_PROVIDER = 3
 
         fun createProvider(context: Context, providerType: Int): LocationProvider {
             return when (providerType) {
                 GPS_PROVIDER -> GpsLocationProvider(context)
                 NETWORK_PROVIDER -> NetworkLocationProvider(context)
                 FUSED_PROVIDER -> FusedLocationProvider(context)
-                MOCK_PROVIDER -> LocationProviderMock(context as Activity)
                 else -> throw RuntimeException()
             }
         }

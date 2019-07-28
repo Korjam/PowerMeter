@@ -45,16 +45,6 @@ class ActivityOutdoorController(private val context: Context, private val view: 
         recordProvider = RecordProvider.getProvider(context)
 
         locationProvider = LocationProvider.createProvider(context, LocationProvider.GPS_PROVIDER)
-        /*
-        // DEBUG PURPOSES
-        locationProvider = LocationProvider.createProvider(context, LocationProvider.MOCK_PROVIDER);
-        try {
-            File file = new File(Environment.getExternalStorageDirectory(), "Cycling outdoor_20180312_085247.json");
-            ((LocationProviderMock)locationProvider).setRecord(RecordMapper.load(file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
 
         try {
             user = UserMapper.load(File(context.filesDir, "user_data.json"))

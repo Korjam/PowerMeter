@@ -3,6 +3,7 @@
     <color name="colorPrimary">#ffa125</color>
     <color name="colorPrimaryDark">#ffa125</color>
     <color name="colorAccent">#25b1ff</color>
+    <color name="colorAccentLight">#E9E9E9</color>
 
     <color name="divider_dark">#2F2F2F</color>
     <color name="divider_gray">#DDDDDD</color>

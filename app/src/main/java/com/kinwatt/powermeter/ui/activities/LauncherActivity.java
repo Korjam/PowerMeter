@@ -34,7 +34,7 @@ public class LauncherActivity extends AppCompatActivity {
 
         if (requestPermissions()) {
             final Handler handler = new Handler();
-            handler.postDelayed(() -> goToUserEdit(), 1000);
+            handler.postDelayed(() -> goToUserEdit(), 1500);
         }
     }
 

@@ -12,4 +12,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.progressBarr" parent="android:Widget.Material.ProgressBar.Large">
+        <item name="android:progressTint">@color/colorAccentLight</item>
+        <item name="android:progressBackgroundTint">@color/colorAccentLight</item>
+        <item name="android:indeterminateTint">@color/colorAccentLight</item>
+    </style>
 </resources>

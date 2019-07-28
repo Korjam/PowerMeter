@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.DevicesActivity">
+    tools:context=".ui.activities.DevicesActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        tools:context=".ui.DevicesActivity" />
+        tools:context=".ui.activities.DevicesActivity" />
 
     <TextView
         android:id="@+id/no_devices"

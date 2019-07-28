@@ -32,7 +32,7 @@ fun <T : Number, S : Number> interpolation(x1: T, y1: S, x2: T, y2: S): (T) -> S
     val _x2 = x2.toDouble()
     val _y2 = y2.toDouble()
 
-    if (_x1 >= _x2) throw IllegalArgumentException(String.format("'%s' cannot be greater than '%s'."))
+    if (_x1 >= _x2) throw IllegalArgumentException(String.format("'$x1' cannot be greater than '$x2'."))
 
     val m = (_y2 - _y1) / (_x2 - _x1)
     val n = _y1 - m * _x1

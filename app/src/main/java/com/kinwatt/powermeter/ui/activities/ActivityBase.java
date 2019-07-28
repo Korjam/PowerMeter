@@ -1,4 +1,4 @@
-package com.kinwatt.powermeter.ui;
+package com.kinwatt.powermeter.ui.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

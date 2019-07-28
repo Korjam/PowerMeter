@@ -15,6 +15,7 @@ import com.kinwatt.powermeter.model.PowerListener
 import com.kinwatt.powermeter.model.PowerProvider
 import com.kinwatt.powermeter.sensor.LocationListener
 import com.kinwatt.powermeter.sensor.LocationProvider
+import com.kinwatt.powermeter.ui.activities.FormActivity
 import java.io.File
 import java.io.IOException
 import java.util.*

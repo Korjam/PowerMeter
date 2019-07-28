@@ -9,4 +9,4 @@
     app:ms_completeButtonText="@string/finish"
     app:ms_nextButtonText="@string/next"
     app:ms_stepperType="progress_bar"
-    tools:context=".ui.FormActivity" />
+    tools:context=".ui.activities.FormActivity" />

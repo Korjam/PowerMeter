@@ -39,7 +39,7 @@ class SpeedAndCadenceClient(context: Context, device: BluetoothDevice) : GattCli
 
         val currentMeasure = characteristic as SpeedAndCadenceMeasure
         if (lastMeasure != null) {
-            var rpm = currentMeasure.getRpm(lastMeasure)
+            var rpm = currentMeasure.getRpm(lastMeasure!!)
             if (java.lang.Float.isNaN(rpm)) {
                 rpm = 0f
             }

@@ -16,6 +16,7 @@ import com.kinwatt.powermeter.model.CyclingIndoorPowerAlgorithm;
 import com.kinwatt.powermeter.model.CyclingOutdoorPowerAlgorithm;
 import com.kinwatt.powermeter.sensor.SpeedListener;
 import com.kinwatt.powermeter.sensor.bluetooth.SpeedAndCadenceClient;
+import com.kinwatt.powermeter.ui.activities.MapActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;

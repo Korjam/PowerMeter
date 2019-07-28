@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/search_title"
+            android:id="@+id/searchTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -23,7 +23,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
 
         <ProgressBar
-            android:id="@+id/bluetooth_progress_bar"
+            android:id="@+id/progressBar"
             style="@style/Widget.AppCompat.ProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,14 +45,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button_cancel"
+            android:id="@+id/cancelButton"
             style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel" />
 
         <Button
-            android:id="@+id/button_start_stop"
+            android:id="@+id/startStopButton"
             style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

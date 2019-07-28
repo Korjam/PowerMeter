@@ -180,7 +180,7 @@
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/power_3s" />
+            app:layout_constraintTop_toBottomOf="@+id/power3s" />
 
         <com.kinwatt.powermeter.ui.widget.NumberView
             android:id="@+id/power5s"
@@ -206,7 +206,7 @@
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/power_5s" />
+            app:layout_constraintTop_toBottomOf="@+id/power5s" />
 
         <com.kinwatt.powermeter.ui.widget.NumberView
             android:id="@+id/power10s"

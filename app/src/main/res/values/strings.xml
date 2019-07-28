@@ -10,7 +10,7 @@
     <string name="back">Back</string>
     <string name="bike_data">Bike data</string>
     <string name="bike_type">Bike type</string>
-    <string name="bike_weight">Bike weight</string>
+    <string name="bike_weight">Bike weight (kg)</string>
 
     <string name="cancel">Cancel</string>
     <string name="connected_devices">Connected devices</string>
@@ -28,7 +28,7 @@
     <string name="feedback_message">Your opinion is important at &appname;.\n\nHelp us make &appname; better filling an anonymous form about your cycling habits, it won\'t take more than 2 minutes.</string>
     <string name="finish">Finish</string>
 
-    <string name="height">Height</string>
+    <string name="height">Height (cm)</string>
 
     <string name="instant_power">Instant power (W)</string>
 
@@ -78,7 +78,7 @@
 
     <string name="velodrome">Velodrome</string>
 
-    <string name="weight">Weight</string>
+    <string name="weight">Weight (kg)</string>
     <string name="why">Why?</string>
 
     <string name="yes">Yes</string>

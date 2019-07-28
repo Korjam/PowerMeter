@@ -31,6 +31,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
         <TextView
             android:id="@+id/duration_title"
             android:layout_width="wrap_content"
@@ -67,7 +74,7 @@
             android:text="@string/speed"
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/duration_title"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/duration" />
 
         <com.kinwatt.powermeter.ui.widget.NumberView
@@ -94,7 +101,7 @@
             android:text="@string/altitude"
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/duration_title"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/speed" />
 
         <com.kinwatt.powermeter.ui.widget.NumberView
@@ -120,7 +127,7 @@
             android:text="@string/distance"
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/duration_title"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/altitude" />
 
         <com.kinwatt.powermeter.ui.widget.NumberView
@@ -145,7 +152,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/power_average_3s"
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
-            app:layout_constraintEnd_toStartOf="@+id/duration_title"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/duration" />
 
@@ -171,7 +178,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/power_average_5s"
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
-            app:layout_constraintEnd_toStartOf="@+id/duration_title"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/power_3s" />
 
@@ -197,7 +204,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/power_average_10s"
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
-            app:layout_constraintEnd_toStartOf="@+id/duration_title"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/power_5s" />
 
@@ -213,6 +220,7 @@
             app:layout_constraintEnd_toEndOf="@+id/power_10s_title"
             app:layout_constraintStart_toStartOf="@+id/power_10s_title"
             app:layout_constraintTop_toBottomOf="@+id/power_10s_title" />
+
 
     </android.support.constraint.ConstraintLayout>
 

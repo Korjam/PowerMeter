@@ -26,6 +26,7 @@ fun cpseg(powerList: List<Int>, seg: Int): Int {
 
 fun <T : Number, S : Number> interpolate(x1: T, y1: S, x2: T, y2: S, v: T) = interpolation(x1, y1, x2, y2)(v)
 
+@Suppress("UNCHECKED_CAST")
 fun <T : Number, S : Number> interpolation(x1: T, y1: S, x2: T, y2: S): (T) -> S {
     val _x1 = x1.toDouble()
     val _y1 = y1.toDouble()

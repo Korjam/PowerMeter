@@ -1,9 +1,11 @@
 package com.kinwatt.powermeter.data
 
 import android.location.Location
+import kotlinx.serialization.Serializable
 
 import kotlin.math.*
 
+@Serializable
 class Position @JvmOverloads constructor(
         var latitude: Double, var longitude: Double, var altitude: Double = 0.0,
         var speed: Float = 0f, var timestamp: Long = 0, var power: Float = 0f) : Cloneable {

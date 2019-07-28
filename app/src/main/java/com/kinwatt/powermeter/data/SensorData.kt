@@ -1,8 +1,11 @@
 package com.kinwatt.powermeter.data
 
+import com.kinwatt.powermeter.data.mappers.UUIDSerializer
+import kotlinx.serialization.Serializable
 import java.util.*
 
-class SensorData(var name: String? = null, var address: String? = null) {
+@Serializable
+data class SensorData(var name: String? = null, var address: String? = null) {
 
     val services: MutableList<ServiceData> = ArrayList()
 
@@ -11,4 +14,5 @@ class SensorData(var name: String? = null, var address: String? = null) {
     fun equals(other: SensorData) = this.address == other.address
 }
 
-class ServiceData(var uuid: UUID)
+@Serializable
+data class ServiceData(@Serializable(with= UUIDSerializer::class)var uuid: UUID)

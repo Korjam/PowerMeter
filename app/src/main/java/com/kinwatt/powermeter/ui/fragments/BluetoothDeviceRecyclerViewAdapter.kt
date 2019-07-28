@@ -27,7 +27,8 @@ class BluetoothDeviceRecyclerViewAdapter(
     override fun onBindViewHolder(holder: BluetoothDeviceViewHolder, position: Int) {
         holder.item = items[position]
         holder.setOnClickListener( View.OnClickListener {
-            listener?.onListFragmentInteraction(holder.item!!, map[holder.item]!!)
+            val device: BluetoothDevice = holder.item!!
+            listener?.onListFragmentInteraction(device, map[device]!!)
         } )
     }
 

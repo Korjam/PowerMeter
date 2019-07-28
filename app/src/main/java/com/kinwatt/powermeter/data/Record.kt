@@ -1,11 +1,15 @@
 package com.kinwatt.powermeter.data
 
 import android.location.Location
+import com.kinwatt.powermeter.data.mappers.DateSerializer
+import kotlinx.serialization.Serializable
 
 import java.util.ArrayList
 import java.util.Date
 
-class Record constructor(var name: String = "", var date: Date = Date()) {
+@Serializable
+data class Record constructor(var name: String = "",
+                              @Serializable(with=DateSerializer::class) var date: Date = Date()) {
 
     val positions: ArrayList<Position> = ArrayList()
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import com.kinwatt.powermeter.R
 import com.kinwatt.powermeter.common.AppSettings
 import com.kinwatt.powermeter.data.Record
@@ -48,6 +49,7 @@ class ActivityOutdoorController(private val context: Context, private val view: 
 
         try {
             user = UserMapper.load(File(context.filesDir, "user_data.json"))
+            Log.i("paco", "me llamo ${user!!.name}")
         } catch (e: IOException) {
             user = null
             e.printStackTrace()

@@ -5,7 +5,7 @@ apply plugin: 'kotlinx-serialization'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "29.0.1"
+    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.kinwatt.powermeter"
         minSdkVersion 21

@@ -3,7 +3,7 @@ package com.kinwatt.powermeter.ui
 import android.content.Context
 import android.content.Intent
 import android.location.Location
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import com.kinwatt.powermeter.R
 import com.kinwatt.powermeter.common.AppSettings

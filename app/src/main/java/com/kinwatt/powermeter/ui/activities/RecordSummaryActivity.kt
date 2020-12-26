@@ -4,7 +4,7 @@ import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
@@ -29,6 +29,7 @@ import com.kinwatt.powermeter.R
 import com.kinwatt.powermeter.common.LocationUtils
 import com.kinwatt.powermeter.data.Record
 import com.kinwatt.powermeter.data.mappers.RecordMapper
+import com.kinwatt.powermeter.databinding.ActivityRecordSummaryBinding
 import com.kinwatt.powermeter.ui.widget.NumberView
 import com.kinwatt.powermeter.ui.widget.WorkaroundMapFragment
 
@@ -39,16 +40,19 @@ import java.util.*
 import kotlin.math.max
 import kotlin.math.roundToInt
 
-import kotlinx.android.synthetic.main.activity_record_summary.*
-
 class RecordSummaryActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    private lateinit var binding: ActivityRecordSummaryBinding
 
     private lateinit var record: Record
     private lateinit var filename: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_record_summary)
+
+        binding = ActivityRecordSummaryBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -86,7 +90,7 @@ class RecordSummaryActivity : AppCompatActivity(), OnMapReadyCallback {
         speed.value = interpolated.speed.toDouble() * 3.6
 
         val mMapFragment = supportFragmentManager.findFragmentById(R.id.map_container) as WorkaroundMapFragment
-        mMapFragment.setListener { scrollView.requestDisallowInterceptTouchEvent(true) }
+        mMapFragment.setListener { binding.scrollView.requestDisallowInterceptTouchEvent(true) }
         mMapFragment.getMapAsync(this)
 
         populateSpeedChart(record)
@@ -208,11 +212,11 @@ class RecordSummaryActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun populateSpeedChart(record: Record) {
-        lineChart.setDrawGridBackground(false)
-        lineChart.isDragEnabled = true
-        lineChart.setScaleEnabled(true)
+        binding.lineChart.setDrawGridBackground(false)
+        binding.lineChart.isDragEnabled = true
+        binding.lineChart.setScaleEnabled(true)
 
-        val xAxis = lineChart.xAxis
+        val xAxis = binding.lineChart.xAxis
         xAxis.setValueFormatter { value, _ -> durationFormat.format(Date(value.toLong())) }
         xAxis.enableGridDashedLine(10f, 10f, 0f)
 
@@ -239,46 +243,46 @@ class RecordSummaryActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val line = LineData(dataSets)
 
-        lineChart.data = line
+        binding.lineChart.data = line
 
-        setSpeedValues(record, lineChart)
+        setSpeedValues(record, binding.lineChart)
     }
 
     private fun populatePowerChart(interpolated: Record) {
 
-        barChart.setDrawBarShadow(false)
-        barChart.setDrawValueAboveBar(true)
+        binding.barChart.setDrawBarShadow(false)
+        binding.barChart.setDrawValueAboveBar(true)
 
-        barChart.description.isEnabled = false
+        binding.barChart.description.isEnabled = false
 
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
-        //barChart.setMaxVisibleValueCount(60);
+        //binding.barChart.setMaxVisibleValueCount(60);
 
         // scaling can now only be done on x- and y-axis separately
-        barChart.setPinchZoom(false)
+        binding.barChart.setPinchZoom(false)
 
-        barChart.setDrawGridBackground(false)
+        binding.barChart.setDrawGridBackground(false)
 
-        val xAxis = barChart.xAxis
+        val xAxis = binding.barChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
         xAxis.granularity = 1f // only intervals of 1 day
         xAxis.labelCount = 7
 
-        val leftAxis = barChart.axisLeft
+        val leftAxis = binding.barChart.axisLeft
         leftAxis.setLabelCount(8, false)
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
         leftAxis.spaceTop = 15f
         leftAxis.axisMinimum = 0f // this replaces setStartAtZero(true)
 
-        val rightAxis = barChart.axisRight
+        val rightAxis = binding.barChart.axisRight
         rightAxis.setDrawGridLines(false)
         rightAxis.setLabelCount(8, false)
         rightAxis.spaceTop = 15f
         rightAxis.axisMinimum = 0f // this replaces setStartAtZero(true)
 
-        val l = barChart.legend
+        val l = binding.barChart.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
         l.orientation = Legend.LegendOrientation.HORIZONTAL
@@ -302,9 +306,9 @@ class RecordSummaryActivity : AppCompatActivity(), OnMapReadyCallback {
         data.setValueTextSize(0f)
         data.barWidth = 45f
 
-        barChart.data = data
+        binding.barChart.data = data
 
-        updateBar(interpolated, barChart)
+        updateBar(interpolated, binding.barChart)
     }
 
     companion object {

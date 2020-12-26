@@ -9,7 +9,7 @@ import android.bluetooth.le.ScanSettings
 import android.os.Bundle
 import android.os.Handler
 import android.os.ParcelUuid
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 import android.util.Log
 import android.view.InflateException
 import android.view.LayoutInflater
@@ -17,17 +17,17 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.kinwatt.powermeter.R
+import com.kinwatt.powermeter.databinding.FragmentConnectDeviceBinding
 import com.kinwatt.powermeter.sensor.bluetooth.SpeedAndCadenceClient
 
 import java.util.ArrayList
 import java.util.UUID
 
-import kotlinx.android.synthetic.main.fragment_connect_device.*
-
 class ConnectDeviceDialogFragment : DialogFragment() {
 
     private var fragment: BluetoothDeviceFragment? = null
 
+    private lateinit var binding: FragmentConnectDeviceBinding
     private lateinit var bluetoothLeScanner: BluetoothLeScanner
     private lateinit var handler: Handler
 
@@ -57,12 +57,13 @@ class ConnectDeviceDialogFragment : DialogFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (viewInstance != null) {
             (viewInstance!!.parent as ViewGroup)?.removeView(viewInstance)
         }
         try {
-            viewInstance = inflater!!.inflate(R.layout.fragment_connect_device, container, false)
+            binding = FragmentConnectDeviceBinding.inflate(inflater, container, false)
+            viewInstance = binding.root
         } catch (e: InflateException) {
             // View already created
         }
@@ -71,21 +72,21 @@ class ConnectDeviceDialogFragment : DialogFragment() {
         //return inflater.inflate(R.layout.fragment_connect_device, container, false);
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        startStopButton.setOnClickListener {
+        binding.startStopButton.setOnClickListener {
             if (searching) {
                 stopScan()
             } else {
                 startScan()
             }
         }
-        cancelButton.setOnClickListener { dismiss() }
+        binding.cancelButton.setOnClickListener { dismiss() }
 
-        progressBar.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
 
-        fragment = fragmentManager.findFragmentById(R.id.search_results) as BluetoothDeviceFragment
+        fragment = fragmentManager!!.findFragmentById(R.id.search_results) as BluetoothDeviceFragment
         startScan()
     }
 
@@ -118,11 +119,11 @@ class ConnectDeviceDialogFragment : DialogFragment() {
 
             searching = true
 
-            progressBar.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
 
-            startStopButton.setText(R.string.stop)
+            binding.startStopButton.setText(R.string.stop)
 
-            searchTitle.setText(R.string.searching_devices)
+            binding.searchTitle.setText(R.string.searching_devices)
 
             handler.postDelayed({
                 if (searching) {
@@ -138,11 +139,11 @@ class ConnectDeviceDialogFragment : DialogFragment() {
             Log.i(TAG, "LE Search Stopped.")
             searching = false
 
-            progressBar.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
 
-            startStopButton.setText(R.string.scan)
+            binding.startStopButton.setText(R.string.scan)
 
-            searchTitle.setText(R.string.search_results)
+            binding.searchTitle.setText(R.string.search_results)
         }
     }
 

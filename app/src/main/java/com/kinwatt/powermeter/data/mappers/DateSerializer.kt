@@ -9,11 +9,11 @@ object DateSerializer : KSerializer<Date> {
     override val descriptor: SerialDescriptor =
         StringDescriptor.withName("DateSerializer")
 
-    override fun serialize(output: Encoder, obj: Date) {
-        output.encodeString(obj.time.toString())
+    override fun serialize(encoder: Encoder, obj: Date) {
+        encoder.encodeString(obj.time.toString())
     }
 
-    override fun deserialize(input: Decoder): Date {
-        return Date(input.decodeString().toLong())
+    override fun deserialize(decoder: Decoder): Date {
+        return Date(decoder.decodeString().toLong())
     }
 }

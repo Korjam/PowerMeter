@@ -2,7 +2,7 @@ package com.kinwatt.powermeter.common
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 
 class AppSettings private constructor(private val context: Context) {
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -12,7 +12,7 @@ class AppSettings private constructor(private val context: Context) {
         set(completed) = preferences.edit().putBoolean(KEY_QUESTIONARY_COMPLETED, completed).apply()
 
     companion object {
-        private val KEY_QUESTIONARY_COMPLETED = "20180507_form"
+        private const val KEY_QUESTIONARY_COMPLETED = "20180507_form"
 
         private var instance: AppSettings? = null
 

@@ -1,24 +1,27 @@
 package com.kinwatt.powermeter.ui.activities
 
 import android.content.Intent
-import android.support.design.widget.FloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.os.Bundle
 import android.view.View
 
 import com.kinwatt.powermeter.R
 import com.kinwatt.powermeter.data.Record
 import com.kinwatt.powermeter.data.provider.RecordProvider
+import com.kinwatt.powermeter.databinding.ActivityRecordListBinding
 import com.kinwatt.powermeter.ui.fragments.RecordFragment
-
-import kotlinx.android.synthetic.main.activity_record_list.*
 
 class RecordListActivity : ActivityBase(), RecordFragment.OnListFragmentInteractionListener {
 
+    private lateinit var binding: ActivityRecordListBinding
     private lateinit var recordFragment: RecordFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_record_list)
+
+        binding = ActivityRecordListBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         recordFragment = supportFragmentManager.findFragmentById(R.id.records) as RecordFragment
 
@@ -31,7 +34,7 @@ class RecordListActivity : ActivityBase(), RecordFragment.OnListFragmentInteract
         if (RecordProvider.getProvider(this).all.isEmpty()) {
             recordFragment.view!!.visibility = View.GONE
         } else {
-            noRecords.visibility = View.GONE
+            binding.noRecords.visibility = View.GONE
         }
     }
 

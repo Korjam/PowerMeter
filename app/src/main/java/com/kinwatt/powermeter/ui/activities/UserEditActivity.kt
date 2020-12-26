@@ -1,7 +1,7 @@
 package com.kinwatt.powermeter.ui.activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -11,24 +11,27 @@ import com.kinwatt.powermeter.data.Bike
 import com.kinwatt.powermeter.data.BikeType
 import com.kinwatt.powermeter.data.User
 import com.kinwatt.powermeter.data.mappers.UserMapper
+import com.kinwatt.powermeter.databinding.ActivityUserEditBinding
 
 import java.io.File
 import java.io.IOException
-
-import kotlinx.android.synthetic.main.activity_user_edit.*
 
 class UserEditActivity : AppCompatActivity() {
 
     private var user = User()
 
+    private lateinit var binding: ActivityUserEditBinding
     private lateinit var userFile: File
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_edit)
 
-        radio_mountain.tag = BikeType.Mountain
-        radio_road.tag = BikeType.Road
+        binding = ActivityUserEditBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.radioMountain.tag = BikeType.Mountain
+        binding.radioRoad.tag = BikeType.Road
 
         userFile = File(filesDir, "user_data.json")
 
@@ -36,7 +39,7 @@ class UserEditActivity : AppCompatActivity() {
             goToMain()
         }
 
-        continueButton.setOnClickListener {
+        binding.continueButton.setOnClickListener {
             if (validateData()) {
                 try {
                     UserMapper.save(user, userFile)
@@ -57,54 +60,54 @@ class UserEditActivity : AppCompatActivity() {
     private fun validateData(): Boolean {
         var res = true
 
-        val name = nameView.text.toString()
-        val age = ageView.text.toString()
-        val weight = weightView.text.toString()
-        val height = heightView.text.toString()
-        val bikeWeight = bikeWeightView.text.toString()
+        val name = binding.nameView.text.toString()
+        val age = binding.ageView.text.toString()
+        val weight = binding.weightView.text.toString()
+        val height = binding.heightView.text.toString()
+        val bikeWeight = binding.bikeWeightView.text.toString()
 
         var focusView: View? = null
 
         if (TextUtils.isEmpty(bikeWeight)) {
-            bikeWeightView.error = getString(R.string.error_field_required)
+            binding.bikeWeightView.error = getString(R.string.error_field_required)
             res = false
-            focusView = bikeWeightView
+            focusView = binding.bikeWeightView
         }
 
-        if (bikeTypeView.checkedRadioButtonId == 0) {
-            radio_mountain.error = getString(R.string.error_field_required)
-            focusView = bikeTypeView
+        if (binding.bikeTypeView.checkedRadioButtonId == 0) {
+            binding.radioMountain.error = getString(R.string.error_field_required)
+            focusView = binding.bikeTypeView
             res = false
         } else {
-            radio_mountain.error = null
+            binding.radioMountain.error = null
         }
 
         if (TextUtils.isEmpty(height)) {
-            heightView.error = getString(R.string.error_field_required)
+            binding.heightView.error = getString(R.string.error_field_required)
             res = false
-            focusView = heightView
+            focusView = binding.heightView
         }
 
         if (TextUtils.isEmpty(weight)) {
-            weightView.error = getString(R.string.error_field_required)
+            binding.weightView.error = getString(R.string.error_field_required)
             res = false
-            focusView = weightView
+            focusView = binding.weightView
         }
 
         if (TextUtils.isEmpty(age)) {
-            ageView.error = getString(R.string.error_field_required)
+            binding.ageView.error = getString(R.string.error_field_required)
             res = false
-            focusView = ageView
+            focusView = binding.ageView
         }
 
         if (TextUtils.isEmpty(name)) {
-            nameView.error = getString(R.string.error_field_required)
+            binding.nameView.error = getString(R.string.error_field_required)
             res = false
-            focusView = nameView
+            focusView = binding.nameView
         } else if (!isValidName(name)) {
-            nameView.error = getString(R.string.error_invalid_name)
+            binding.nameView.error = getString(R.string.error_invalid_name)
             res = false
-            focusView = nameView
+            focusView = binding.nameView
         }
 
         if (!res) {
@@ -116,7 +119,7 @@ class UserEditActivity : AppCompatActivity() {
             user.weight = java.lang.Float.parseFloat(weight)
 
             val bike = Bike()
-            bike.type = findViewById<View>(bikeTypeView!!.checkedRadioButtonId).tag as BikeType
+            bike.type = findViewById<View>(binding.bikeTypeView!!.checkedRadioButtonId).tag as BikeType
             bike.weight = java.lang.Float.parseFloat(bikeWeight)
 
             user.bikes.add(bike)

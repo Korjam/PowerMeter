@@ -2,7 +2,7 @@ package com.kinwatt.powermeter.ui.widget;
 
 import android.content.Context;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.TextView;
 

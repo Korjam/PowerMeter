@@ -3,10 +3,11 @@ package com.kinwatt.powermeter.ui.activities
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.appcompat.app.AppCompatActivity
 
 import com.kinwatt.powermeter.R
+import com.kinwatt.powermeter.databinding.ActivityFormBinding
 import com.kinwatt.powermeter.ui.fragments.steps.QuestionCheckboxFragment
 import com.kinwatt.powermeter.ui.fragments.steps.QuestionPowerMeterFragment
 import com.kinwatt.powermeter.ui.fragments.steps.QuestionNumberFragment
@@ -14,25 +15,27 @@ import com.kinwatt.powermeter.ui.fragments.steps.QuestionTextFragment
 import com.stepstone.stepper.Step
 import com.stepstone.stepper.adapter.AbstractFragmentStepAdapter
 
-import kotlinx.android.synthetic.main.activity_form.*
-
 class FormActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityFormBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_form)
+        binding = ActivityFormBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        stepperLayout.adapter = QuestionStepperAdapter(supportFragmentManager, this)
+        binding.stepperLayout.adapter = QuestionStepperAdapter(supportFragmentManager, this)
 
         val accentColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             resources.getColor(R.color.colorAccent, theme)
         else
             resources.getColor(R.color.colorAccent)
 
-        stepperLayout!!.setBackButtonColor(accentColor)
-        stepperLayout!!.setNextButtonColor(accentColor)
-        stepperLayout!!.setCompleteButtonColor(accentColor)
+        binding.stepperLayout!!.setBackButtonColor(accentColor)
+        binding.stepperLayout!!.setNextButtonColor(accentColor)
+        binding.stepperLayout!!.setCompleteButtonColor(accentColor)
     }
 
     class QuestionStepperAdapter(fm: FragmentManager, context: Context) : AbstractFragmentStepAdapter(fm, context) {

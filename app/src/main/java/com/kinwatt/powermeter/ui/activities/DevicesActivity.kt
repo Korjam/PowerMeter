@@ -8,23 +8,24 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.ParcelUuid
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 
 import com.kinwatt.powermeter.R
 import com.kinwatt.powermeter.data.SensorData
 import com.kinwatt.powermeter.data.ServiceData
 import com.kinwatt.powermeter.data.provider.SensorProvider
+import com.kinwatt.powermeter.databinding.ActivityDevicesBinding
 import com.kinwatt.powermeter.ui.fragments.BluetoothDeviceFragment
 import com.kinwatt.powermeter.ui.fragments.ConnectDeviceDialogFragment
 import com.kinwatt.powermeter.ui.fragments.DeviceFragment
-
-import kotlinx.android.synthetic.main.activity_devices.*
 
 class DevicesActivity : AppCompatActivity(), BluetoothDeviceFragment.OnListFragmentInteractionListener {
 
     private lateinit var deviceFragment: DeviceFragment
     private lateinit var bluetoothAdapter: BluetoothAdapter
+
+    private lateinit var binding: ActivityDevicesBinding
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -34,7 +35,7 @@ class DevicesActivity : AppCompatActivity(), BluetoothDeviceFragment.OnListFragm
                 val bluetoothState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
                 if (bluetoothState == BluetoothAdapter.STATE_ON) {
                     val bluetoothLeScanner = bluetoothAdapter.bluetoothLeScanner
-                    connectButton.isEnabled = bluetoothLeScanner != null
+                    binding.connectButton.isEnabled = bluetoothLeScanner != null
                     unregisterReceiver(this)
                 }
             }
@@ -43,9 +44,12 @@ class DevicesActivity : AppCompatActivity(), BluetoothDeviceFragment.OnListFragm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_devices)
 
-        connectButton.setOnClickListener { v ->
+        binding = ActivityDevicesBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.connectButton.setOnClickListener {
             val dialogFragment = ConnectDeviceDialogFragment()
             dialogFragment.show(supportFragmentManager, "connect_devices_dialog")
         }
@@ -55,7 +59,7 @@ class DevicesActivity : AppCompatActivity(), BluetoothDeviceFragment.OnListFragm
         if (SensorProvider.getProvider(this).all.isEmpty()) {
             deviceFragment.view!!.visibility = View.GONE
         } else {
-            noDevices.visibility = View.GONE
+            binding.noDevices.visibility = View.GONE
         }
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -66,7 +70,7 @@ class DevicesActivity : AppCompatActivity(), BluetoothDeviceFragment.OnListFragm
         }
 
         val bluetoothLeScanner = bluetoothAdapter.bluetoothLeScanner
-        connectButton.isEnabled = bluetoothLeScanner != null
+        binding.connectButton.isEnabled = bluetoothLeScanner != null
     }
 
     override fun onListFragmentInteraction(device: BluetoothDevice, uuids: List<ParcelUuid>) {
@@ -75,7 +79,7 @@ class DevicesActivity : AppCompatActivity(), BluetoothDeviceFragment.OnListFragm
             deviceFragment.add(data)
 
             deviceFragment.view!!.visibility = View.VISIBLE
-            noDevices.visibility = View.GONE
+            binding.noDevices.visibility = View.GONE
         }
     }
 

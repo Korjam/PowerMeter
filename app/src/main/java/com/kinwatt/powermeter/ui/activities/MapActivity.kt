@@ -14,11 +14,12 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.RoundCap
 import com.kinwatt.powermeter.R
 import com.kinwatt.powermeter.data.Position
+import com.kinwatt.powermeter.databinding.ActivityMapBinding
 import com.kinwatt.powermeter.ui.MapController
 
-import kotlinx.android.synthetic.main.activity_map.*
-
 class MapActivity : ActivityBase(), OnMapReadyCallback {
+
+    private lateinit var binding: ActivityMapBinding
 
     private lateinit var options: PolylineOptions
     private var mMap: GoogleMap? = null
@@ -28,33 +29,36 @@ class MapActivity : ActivityBase(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_map)
 
-        buttonStop.isEnabled = false
+        binding = ActivityMapBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        speed.units = "km/h"
-        power.units = "W"
+        binding.buttonStop.isEnabled = false
 
-        buttonStart.setOnClickListener { v ->
-            buttonStart.isEnabled = false
+        binding.speed.units = "km/h"
+        binding.power.units = "W"
 
-            duration.restart()
+        binding.buttonStart.setOnClickListener { v ->
+            binding.buttonStart.isEnabled = false
+
+            binding.duration.restart()
             controller.start()
 
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-            buttonStop.isEnabled = true
+            binding.buttonStop.isEnabled = true
         }
 
-        buttonStop.setOnClickListener { v ->
-            buttonStop.isEnabled = false
+        binding.buttonStop.setOnClickListener { v ->
+            binding.buttonStop.isEnabled = false
 
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-            duration.stop()
+            binding.duration.stop()
             controller.stop()
 
-            buttonStart.isEnabled = true
+            binding.buttonStart.isEnabled = true
         }
 
         val mapFragment = supportFragmentManager
@@ -106,17 +110,17 @@ class MapActivity : ActivityBase(), OnMapReadyCallback {
     }
 
     fun stopTimer() {
-        duration.stop()
-        buttonStop.isEnabled = false
-        buttonStart.isEnabled = true
+        binding.duration.stop()
+        binding.buttonStop.isEnabled = false
+        binding.buttonStart.isEnabled = true
     }
 
     fun setSpeed(speed: Float) {
-        this.speed.value = speed.toDouble()
+        binding.speed.value = speed.toDouble()
     }
 
     fun setPower(power: Float) {
-        this.power.value = power.toDouble()
+        binding.power.value = power.toDouble()
     }
 
     fun clearMap() {
